@@ -12,7 +12,6 @@ Examples Concepts demonstrated:
 Optional:
 - Autoscaling
 - Infrastructure pinning
-- Run all components without ArgoCD
 
 ## Youtube Video Demonstration
 [![Youtube Video Demonstration](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/youtube1.png)](https://youtu.be/Mt0RzqFKnrY)
@@ -22,6 +21,7 @@ Optional:
 - Admin Privileges (i.e. cluster-admin RBAC privileges or logged in as system:admin user)
 - ArgoCLI Installed (see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md)
 - oc client installed (see https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/)
+- Storage (this demo is tested on AWS using EBS as the storage backend)
 
 ## Running this Demo
 
@@ -31,15 +31,10 @@ If you have an Openshift cluster up, `argocd` CLI installed, and are authenticat
 ./runme.sh
 ```
 
-#### Running without ArgoCD - Streaming App Platform Demo
-If you would like to run the demo without any ArgoCD components
-```
-./no_argocd_runme.sh
-```
-
 This will run the script off of the static files in the directories instead of deploying applications from ArgoCD
 
 This script will:
+- Deploy and configure ArgoCD
 - Deploy the Strimzi Kafka Operator
 - Deploy an ephemeral kafka cluster with 3 broker nodes and 3 zookeeper nodes
 - Create three Kafka topics (my-topic1, my-topic2, my-topic3)
@@ -47,7 +42,6 @@ This script will:
 - Deploy the Integr8ly Grafana Operator
 - Add the Prometheus Datasource to Grafana
 - Add Strimzi Kafka, Kafka Exporter, and Zookeeper Dashboards
-- Deploy and configure ArgoCD
 - Connect ArgoCD to IoT Github Repo (customizable)
 - Deploy the IoT Temperature Sensors Demo using ArgoCD
 - Open ArgoCD Route

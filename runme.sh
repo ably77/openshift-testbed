@@ -8,17 +8,8 @@ CODEREADY_NAMESPACE="codeready"
 KAFKA_NAMESPACE="myproject"
 GRAFANA_NAMESPACE="myproject"
 
-#### Create Grafana CRDs
-oc create -f grafana-operator/deploy/crds/
-
-#### Create CodeReady CRDs
-oc apply -f codeready/deploy/crds/
-
-### Deploy Strimzi CRDs
-oc apply -f strimzi-operator/deploy/crds/strimzi-cluster-operator-0.15.0.yaml
-
-### Deploy Tekton CRDs
-oc apply -f tekton/crd.yaml
+#### Create demo CRDs
+oc create -f crds/
 
 ### Check if argocd CLI is installed
 ARGOCLI=$(which argocd)

@@ -7,17 +7,8 @@ CONTEXT_NAME="eu"
 KAFKA_NAMESPACE="myproject"
 GRAFANA_NAMESPACE="myproject"
 
-#### Create Grafana CRDs
-oc create -f grafana-operator/deploy/crds --context=${CONTEXT_NAME}
-
-#### Create tekton CRD
-oc apply -f tekton/crd.yaml --context=${CONTEXT_NAME}
-
-#### Create CodeReady CRDs
-#oc apply -f codeready/deploy/crds/org_v1_che_crd.yaml
-
-### Deploy Strimzi CRDs
-oc apply -f strimzi-operator/deploy/crds/strimzi-cluster-operator-0.15.0.yaml --context=${CONTEXT_NAME}
+#### Create demo CRDs
+oc create -f crds/ --context=${CONTEXT_NAME}
 
 ### Check if argocd CLI is installed
 ARGOCLI=$(which argocd)

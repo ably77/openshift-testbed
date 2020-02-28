@@ -69,3 +69,6 @@ argocd repo add ${repo7_url}
 argocd repo add ${repo8_url}
 argocd repo add ${repo9_url}
 argocd repo add ${repo10_url}
+
+# Add argocd main project
+oc create -f argocd/main-project.yaml
