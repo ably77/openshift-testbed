@@ -4,12 +4,14 @@ The purpose of this repo is to show several examples of Openshift and upstream K
 Examples Concepts demonstrated:
 - Real-time Streaming IoT Application with Console
 - ArgoCD driven Continuous Delivery for all components (Kafka, Grafana, Prometheus, load-testing demo, iot-demo app)
+- GitOps workflow
 - Prometheus metrics
 - Grafana Dashboards
 - CodeReady Workspaces
 - Tekton Build Pipelines
 
 Optional:
+- Multi-cluster demonstration
 - Autoscaling
 - Infrastructure pinning
 
@@ -34,7 +36,10 @@ If you have an Openshift cluster up, `argocd` CLI installed, and are authenticat
 This will run the script off of the static files in the directories instead of deploying applications from ArgoCD
 
 This script will:
-- Deploy and configure ArgoCD
+- Deploy necessary demo CRDs
+- Deploy and argoCD
+- Configure argoCD to demo repositories
+- Open ArgoCD Route
 - Deploy the Strimzi Kafka Operator
 - Deploy an ephemeral kafka cluster with 3 broker nodes and 3 zookeeper nodes
 - Create three Kafka topics (my-topic1, my-topic2, my-topic3)
@@ -42,17 +47,14 @@ This script will:
 - Deploy the Integr8ly Grafana Operator
 - Add the Prometheus Datasource to Grafana
 - Add Strimzi Kafka, Kafka Exporter, and Zookeeper Dashboards
-- Connect ArgoCD to IoT Github Repo (customizable)
 - Deploy the IoT Temperature Sensors Demo using ArgoCD
-- Open ArgoCD Route
 - Open Grafana Route
-- Open IoT Sensors Demo App Route
+- Open IoT Temperature Sensors Demo app route
 - Deploy sample cronJob1 and cronJob2
 - Deploy CodeReady Workspaces
-- Create an Eclipse Che cluster with demo this demo's repositories
+- Create an Eclipse Che cluster with this demo's repositories
 - Deploy Tekton Pipelines Operator using ArgoCD
-- Deploy cat-dog voting app Tekton image build pipeline
-- Deploy cat-dog voting app using ArgoCD
+- Deploy cat-dog voting app Tekton image build & deploy pipeline
 
 ## Overview
 Apache Kafka is a highly scalable and performant distributed event streaming platform great for storing, reading, and analyzing streaming data. Originally created at LinkedIn, the project was open sourced to the Apache Foundation in 2011. Kafka enables companies looking to move from traditional batch processes over to more real-time streaming use cases.
