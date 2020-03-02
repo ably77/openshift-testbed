@@ -14,6 +14,7 @@ repo7_url="https://github.com/ably77/strimzi-demo-shared"
 repo8_url="https://github.com/ably77/strimzi-demo-tekton"
 repo9_url="https://github.com/ably77/strimzi-demo-voteapp-pipeline"
 repo10_url="https://github.com/ably77/strimzi-demo-voteapp"
+repo11_url="https://github.com/ably77/springboot-tekton-argo"
 
 # Create a new namespace for ArgoCD components
 oc new-project ${argo_namespace}
@@ -69,6 +70,7 @@ argocd repo add ${repo7_url}
 argocd repo add ${repo8_url}
 argocd repo add ${repo9_url}
 argocd repo add ${repo10_url}
+argocd repo add ${repo11_url}
 
 # Add argocd main project
 oc create -f argocd/main-project.yaml
