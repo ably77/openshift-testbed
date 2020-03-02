@@ -148,8 +148,8 @@ parameters:
   name: SOURCE_REPOSITORY_URL
   required: true
   # changed to own
-  value: https://github.com/ably77/container-pipelines.git
-  #value: https://github.com/redhat-cop/container-pipelines.git
+  #value: https://github.com/ably77/container-pipelines.git
+  value: https://github.com/redhat-cop/container-pipelines.git
 - description: Git branch/tag reference
   name: SOURCE_REPOSITORY_REF
   value: "master"
@@ -160,8 +160,8 @@ parameters:
   name: APPLICATION_SOURCE_REPO
   required: true
   # changed to own
-  value: https://github.com/ably77/spring-rest.git
-  # value: https://github.com/redhat-cop/spring-rest.git
+  #value: https://github.com/ably77/spring-rest.git
+  value: https://github.com/redhat-cop/spring-rest.git
 - description: Source code branch for demo app
   name: APPLICATION_SOURCE_REF
   value: master

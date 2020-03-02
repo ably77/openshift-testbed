@@ -59,3 +59,9 @@ To access app route:
 ```
 oc get routes -n basic-springboot-build
 ```
+
+### Uninstall
+To uninstall just simply delete the project namespace
+```
+./uninstall.sh
+```
