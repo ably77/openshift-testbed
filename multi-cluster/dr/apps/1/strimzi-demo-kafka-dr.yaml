@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-demo-kafka-dr
+  name: openshift-testbed-argo-kafka-dr
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: dr
   source:
-    repoURL: https://github.com/ably77/strimzi-demo-kafka
+    repoURL: https://github.com/ably77/openshift-testbed-argo-kafka
     targetRevision: HEAD
     path: .
   destination:

@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-demo-prometheus
+  name: openshift-testbed-argo-prometheus
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: main
   source:
-    repoURL: https://github.com/ably77/strimzi-demo-prometheus
+    repoURL: https://github.com/ably77/openshift-testbed-argo-prometheus
     targetRevision: HEAD
     path: .
   destination:

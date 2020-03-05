@@ -8,7 +8,7 @@ metadata:
 spec:
   project: main
   source:
-    repoURL: https://github.com/ably77/strimzi-demo-codeready
+    repoURL: https://github.com/ably77/openshift-testbed-argo-codeready
     targetRevision: HEAD
     path: .
   destination:

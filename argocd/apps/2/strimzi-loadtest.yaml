@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-loadtest
+  name: openshift-testbed-argo-strimzi-loadtest
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: main
   source:
-    repoURL: https://github.com/ably77/strimzi-loadtest
+    repoURL: https://github.com/ably77/openshift-testbed-argo-strimzi-loadtest
     targetRevision: HEAD
     path: .
   destination:

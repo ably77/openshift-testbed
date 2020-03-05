@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-demo-voteapp-pipeline-dr
+  name: openshift-testbed-argo-voteapp-pipeline-dr
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: dr
   source:
-    repoURL: https://github.com/ably77/strimzi-demo-voteapp-pipeline
+    repoURL: https://github.com/ably77/openshift-testbed-argo-voteapp-pipeline
     targetRevision: HEAD
     path: .
   destination:

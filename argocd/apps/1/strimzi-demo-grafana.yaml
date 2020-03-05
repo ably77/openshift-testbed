@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-demo-grafana
+  name: openshift-testbed-argo-grafana
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: main
   source:
-    repoURL: https://github.com/ably77/strimzi-demo-grafana
+    repoURL: https://github.com/ably77/openshift-testbed-argo-grafana
     targetRevision: HEAD
     path: .
   destination:

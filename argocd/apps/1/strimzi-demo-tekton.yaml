@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-demo-tekton
+  name: openshift-testbed-argo-tekton
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   project: main
   source:
-    repoURL: https://github.com/ably77/strimzi-demo-tekton
+    repoURL: https://github.com/ably77/openshift-testbed-argo-tekton
     targetRevision: HEAD
     path: .
   destination:
