@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-demo-codeready
+  name: openshift-testbed-argo-codeready
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
