@@ -8,7 +8,10 @@ metadata:
 spec:
   project: main
   source:
+    # comment out below if in workshop
     repoURL: https://github.com/ably77/openshift-testbed-argo-codeready
+    # for use with workshops, uncomment below and replace <YOUR_GITHUB_USER_HERE>
+    #repoURL: https://github.com/<YOUR_GITHUB_USER_HERE>/openshift-testbed-argo-codeready
     targetRevision: HEAD
     path: .
   destination:
