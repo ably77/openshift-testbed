@@ -33,8 +33,6 @@ If you have an Openshift cluster up, `argocd` CLI installed, and are authenticat
 ./runme.sh
 ```
 
-This will run the script off of the static files in the directories instead of deploying applications from ArgoCD
-
 This script will:
 - Deploy necessary demo CRDs
 - Deploy and argoCD
@@ -54,7 +52,6 @@ This script will:
 - Deploy CodeReady Workspaces
 - Create an Eclipse Che cluster with this demo's repositories
 - Deploy Tekton Pipelines Operator using ArgoCD
-- Deploy cat-dog voting app Tekton image build & deploy pipeline
 
 ## Overview
 Apache Kafka is a highly scalable and performant distributed event streaming platform great for storing, reading, and analyzing streaming data. Originally created at LinkedIn, the project was open sourced to the Apache Foundation in 2011. Kafka enables companies looking to move from traditional batch processes over to more real-time streaming use cases.
