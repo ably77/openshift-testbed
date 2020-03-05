@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: springboot-triggertemplate
+spec:
+  params:
+  - name: eventid
+    description: eventid payload of listener
+  - name: namespace
+    description: The namespace to create the resources
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineRun
+    metadata:
+      generateName: basic-spring-boot-pipeline-
+      template: generic-java-jenkins-pipeline
+      #namespace: basic-spring-boot-build
+      labels:
+        tekton.dev/pipeline: basic-spring-boot-pipeline
+    spec:
+      pipelineRef:
+        name: basic-spring-boot-pipeline
+      resources:
+      - name: basic-spring-boot-git
+        resourceRef:
+          name: basic-spring-boot-git
+      serviceAccountName: pipeline
+      timeout: 1h0m0s

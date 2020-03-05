@@ -10,3 +10,20 @@ oc project basic-spring-boot-build
 oc process -f build.yml -p APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-build -p SOURCE_REPOSITORY_URL="https://github.com/ably77/container-pipelines.git" -p APPLICATION_SOURCE_REPO="https://github.com/ably77/spring-rest.git" | oc apply -f-
 
 oc process -f deployment.yml -p APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-build -p SA_NAMESPACE=basic-spring-boot-build -p READINESS_PATH="/health" -p READINESS_RESPONSE="status.:.UP" | oc apply -f-
+
+### setup triggers
+oc create -f triggers/
+
+### setup github webhook
+./github-webhooks/runme.sh
+
+### list pipeline
+tkn pipeline list
+
+### follow logs
+echo to follow logs:
+echo "tkn pipeline logs -f"
+
+### empty commit
+echo to create an empty commit:
+echo "git commit -m "empty-commit" --allow-empty && git push origin master"

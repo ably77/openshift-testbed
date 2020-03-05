@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: springboot-listener
+spec:
+  serviceAccountName: tekton-triggers-sa
+  triggers:
+  - binding:
+      name: springboot-pipelinebinding
+    template:
+      name: springboot-triggertemplate

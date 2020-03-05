@@ -1,0 +1,10 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: vote-cicd-pipelinebinding
+spec:
+  params:
+  - name: eventid
+    value: "123"
+  - name: namespace
+    value: pipelines-tutorial
