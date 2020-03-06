@@ -15,7 +15,6 @@ spec:
       # your github user
     - name: GitHubUser
       value: "ably77"
-      # the name of your github repo, typically doesn't change
     - name: GitHubRepo
       value: "spring-rest"
     - name: GitHubSecretName
