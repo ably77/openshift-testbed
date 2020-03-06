@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Codeready Parameters
-CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/strimzi-demo-codeready/master/dev-file/strimzi-demo-devfile.yaml"
+CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-argo-codeready/master/dev-file/strimzi-demo-devfile.yaml"
 CODEREADY_NAMESPACE="codeready"
 
 # Don't change unless you change argocd/<app>.yaml namespace pointers
