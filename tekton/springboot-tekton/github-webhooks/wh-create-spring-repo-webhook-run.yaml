@@ -22,7 +22,7 @@ spec:
     - name: GitHubSecretStringKey
       value: secret
     - name: ExternalDomain
-      #value: http://spring-boot-eventlistener-basic-spring-boot-build.apps.ly-demo.openshiftaws.com
+      #value: http://spring-boot-eventlistener-basic-spring-boot-build.apps.<CLUSTER_NAME>.<CLUSTER_DOMAIN>
       value: http://springboot-eventlistener-basic-spring-boot-build.apps.ly-demo.openshiftaws.com
   timeout: 1000s
   serviceAccountName: tekton-triggers-createwebhook
