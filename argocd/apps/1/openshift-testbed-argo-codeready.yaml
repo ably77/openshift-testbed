@@ -8,16 +8,4 @@ metadata:
 spec:
   project: main
   source:
-    # comment out below if in workshop
     repoURL: https://github.com/ably77/openshift-testbed-argo-codeready
-    # for use with workshops, uncomment below and replace <YOUR_GITHUB_USER_HERE>
-    #repoURL: https://github.com/<YOUR_GITHUB_USER_HERE>/openshift-testbed-argo-codeready
-    targetRevision: HEAD
-    path: .
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: codeready
-  syncPolicy:
-    automated:
-      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
-      selfHeal: false # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
