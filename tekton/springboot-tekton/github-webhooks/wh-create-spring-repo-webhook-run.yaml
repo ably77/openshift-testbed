@@ -9,10 +9,8 @@ spec:
     name: create-webhook
   inputs:
     params:
-      # your github org - same as user if there is no org
     - name: GitHubOrg
       value: "ably77"
-      # your github user
     - name: GitHubUser
       value: "ably77"
     - name: GitHubRepo
@@ -23,9 +21,7 @@ spec:
       value: token
     - name: GitHubSecretStringKey
       value: secret
-      # external domain for your webhook listener route, replace <CLUSTER_NAME> and <CLUSTER_DOMAIN>
     - name: ExternalDomain
-      #value: http://springboot-eventlistener-basic-spring-boot-build.apps.<CLUSTER_NAME>.<CLUSTER_DOMAIN>
       value: http://springboot-eventlistener-basic-spring-boot-build.apps.ly-demo.openshiftaws.com
   timeout: 1000s
   serviceAccountName: tekton-triggers-createwebhook
