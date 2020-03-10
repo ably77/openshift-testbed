@@ -60,9 +60,6 @@ echo opening consumer-app route
 iot_route=$(oc get routes -n ${KAFKA_NAMESPACE} --context ${CONTEXT_NAME} | grep consumer-app-myproject.apps | awk '{ print $2 }')
 open http://${iot_route}
 
-### switch to codeready namespace
-oc project codeready
-
 ### wait for codeready workspace to deploy
 ./multi-cluster/wait-for-rollout.sh deployment codeready codeready eu
 
