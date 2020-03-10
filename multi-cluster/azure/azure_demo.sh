@@ -1,0 +1,71 @@
+#!/bin/bash
+
+# azure Cluster Parameters
+CONTEXT_NAME="azure"
+
+# Don't change unless you change argocd/<app>.yaml namespace pointers
+KAFKA_NAMESPACE="myproject"
+GRAFANA_NAMESPACE="myproject"
+
+#### Create demo CRDs
+oc create -f crds/ --context=${CONTEXT_NAME}
+
+### Check if argocd CLI is installed
+ARGOCLI=$(which argocd)
+echo checking if argocd CLI is installed
+if [[ $ARGOCLI == "" ]]
+then
+        echo
+        echo "argocd CLI not installed"
+        echo "see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md for installation instructions"
+        echo "re-run the script after argocd CLI is installed"
+        echo
+        exit 1
+fi
+
+### Add azure context to argocd
+argocd cluster add ${CONTEXT_NAME}
+
+### create argocd azure project
+oc create -f azure/azure-project.yaml
+
+### create azure applications
+oc create -f azure/apps/1/
+
+### check kafka deployment status
+echo waiting for kafka deployment to complete
+./extras/wait-for-condition-context.sh my-cluster-kafka-2 ${KAFKA_NAMESPACE} ${CONTEXT_NAME}
+
+### check grafana deployment status
+echo checking grafana deployment status before deploying applications
+./extras/wait-for-condition-context.sh grafana-deployment ${GRAFANA_NAMESPACE} ${CONTEXT_NAME}
+
+### deploy IoT demo and load test application in argocd
+oc create -f azure/apps/2/
+
+### open grafana route
+echo opening grafana route
+grafana_route=$(oc get routes -n ${GRAFANA_NAMESPACE} --context ${CONTEXT_NAME} | grep grafana-route | awk '{ print $2 }')
+open https://${grafana_route}
+
+### Wait for IoT Demo
+./extras/wait-for-condition-context.sh consumer-app myproject ${CONTEXT_NAME}
+
+### open IoT demo app route
+echo opening consumer-app route
+iot_route=$(oc get routes -n ${KAFKA_NAMESPACE} --context ${CONTEXT_NAME} | grep consumer-app-myproject.apps.ly-demo-azure | awk '{ print $2 }')
+open http://${iot_route}
+
+### end
+echo
+echo installation complete
+echo
+echo
+echo links to console routes:
+echo
+echo iot demo-azure console:
+echo http://${iot_route}
+echo
+echo grafana-azure dashboards:
+echo https://${grafana_route}
+echo

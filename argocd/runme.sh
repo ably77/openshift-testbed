@@ -7,12 +7,12 @@ argo_version="1.4.2"
 
 # commonly forked
 repo1_url="https://github.com/ably77/openshift-testbed-argo-iotdemo"
-repo2_url="https://github.com/ably77/openshift-testbed-argo-codeready"
-repo3_url="https://github.com/ably77/openshift-testbed-argo-voteapp-pipeline"
-repo4_url="https://github.com/ably77/openshift-testbed-argo-voteapp"
-repo5_url="https://github.com/ably77/openshift-testbed-argo-springbootpipeline"
+repo2_url="https://github.com/ably77/openshift-testbed-argo-voteapp-pipeline"
+repo3_url="https://github.com/ably77/openshift-testbed-argo-voteapp"
+repo4_url="https://github.com/ably77/openshift-testbed-argo-springbootpipeline"
 
 # stable
+repo5_url="https://github.com/ably77/openshift-testbed-argo-codeready"
 repo6_url="https://github.com/ably77/openshift-testbed-argo-strimzi-loadtest"
 repo7_url="https://github.com/ably77/openshift-testbed-argo-prometheus"
 repo8_url="https://github.com/ably77/openshift-testbed-argo-grafana"

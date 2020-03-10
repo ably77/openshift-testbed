@@ -19,6 +19,9 @@ fi
 # Removing Argo/IoT demo from eu cluster (if it exists)
 ./multi-cluster/eu/eu_uninstall.sh
 
+# Removing Argo/IoT demo from azure cluster (if it exists)
+./multi-cluster/azure/azure_uninstall.sh
+
 # Removing Argo/IoT demo from main cluster (if it exists)
 ./argocd/uninstall.sh
 
