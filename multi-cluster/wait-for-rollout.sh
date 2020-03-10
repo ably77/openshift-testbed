@@ -9,9 +9,9 @@ namespace=$3
 CONTEXT_NAME=$4
 
 while [ "$OUTPUT" -ne 1 ]; do
-  OUTPUT=`oc get ${rollout_type}/${rollout_name} -n ${namespace} 2>/dev/null | grep -c ${rollout_name}`;
+  OUTPUT=`oc get ${rollout_type}/${rollout_name} -n ${namespace} --context ${CONTEXT_NAME} 2>/dev/null | grep -c ${rollout_name}`;
   seconds=$((seconds+20))
   printf "Waiting %s seconds for ${rollout_type} ${rollout_name} to come up.\n" "${seconds}"
   sleep 20
-  oc rollout status ${rollout_type}/${rollout_name} -n ${namespace}
+  oc rollout status ${rollout_type}/${rollout_name} -n ${namespace} --context ${CONTEXT_NAME}
 done

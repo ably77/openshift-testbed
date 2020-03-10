@@ -64,7 +64,7 @@ open http://${iot_route}
 oc project codeready
 
 ### wait for codeready workspace to deploy
-./extras/wait-for-rollout.sh deployment codeready codeready
+./multi-cluster/wait-for-rollout.sh deployment codeready codeready azure
 
 ### create/open codeready workspace from custom URL dev-file.yaml
 echo deploying codeready workspace
