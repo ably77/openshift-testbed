@@ -66,7 +66,7 @@ open https://${grafana_route}
 ### open IoT demo app route
 echo opening consumer-app route
 # fix this static address
-iot_route=$(oc get routes -n ${KAFKA_NAMESPACE} | grep consumer-app-myproject.apps.ly-demo.openshiftaws.com | awk '{ print $2 }')
+iot_route=$(oc get routes -n ${KAFKA_NAMESPACE} | grep consumer-app-myproject.apps | awk '{ print $2 }')
 open http://${iot_route}
 
 ### switch to codeready namespace
@@ -77,7 +77,7 @@ oc project codeready
 
 ### create/open codeready workspace from custom URL dev-file.yaml
 echo deploying codeready workspace
-CHE_HOST=$(oc get routes -n ${CODEREADY_NAMESPACE} | grep codeready-codeready | awk '{ print $2 }')
+CHE_HOST=$(oc get routes -n ${CODEREADY_NAMESPACE} | grep codeready-codeready.apps | awk '{ print $2 }')
 open http://${CHE_HOST}/f?url=${CODEREADY_DEVFILE_URL}
 
 ### end

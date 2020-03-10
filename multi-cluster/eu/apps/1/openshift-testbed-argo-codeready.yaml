@@ -6,7 +6,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: main
+  project: eu
   source:
     repoURL: https://github.com/ably77/openshift-testbed-argo-codeready
     targetRevision: HEAD
