@@ -7,6 +7,9 @@ echo "- CLUSTER_DOMAIN"
 echo "- GITHUB_USERNAME"
 echo "- GITHUB_ORG (same as username if no org exists)"
 echo "- GITHUB_TOKEN (https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line#creating-a-token)"
+echo "     Permissions Required for Token:"
+echo "     - public_repo"
+echo "     - admin: repo_hook"
 echo
 
 read -p 'Cluster Name: ' CLUSTER_NAME
@@ -37,26 +40,40 @@ oc create -f projects.yml
 oc project basic-spring-boot-build
 
 # Process and create build and deployment pipelines
-
-# test if you need the static links
-#oc process -f build.yml -p APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-build -p SOURCE_REPOSITORY_URL="https://github.com/redhat-cop/container-pipelines" -p APPLICATION_SOURCE_REPO="https://github.com/redhat-cop/spring-rest" | oc apply -f-
 oc process -f build.yml -p APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-build | oc apply -f-
 
 oc process -f deployment.yml -p APPLICATION_NAME=basic-spring-boot -p NAMESPACE=basic-spring-boot-build -p SA_NAMESPACE=basic-spring-boot-build -p READINESS_PATH="/health" -p READINESS_RESPONSE="status.:.UP" | oc apply -f-
 
 ### setup triggers
+echo
+echo setting up webhook trigger
 oc create -f triggers/
 
 ### setup github webhook
+echo
+echo setting up github webhook
 ./github-webhooks/runme.sh
 
 ### list pipeline
+echo
+echo "listing pipeline with command: tkn pipeline list"
 tkn pipeline list
 
-### follow logs
-echo to follow logs:
-echo "tkn pipeline logs -f"
+### next steps
+echo
+echo "Fork this repo if you havent already"
+echo "https://github.com/redhat-cop/spring-rest"
+echo
+echo "Clone your forked repo so you can push to it"
+echo "git clone https://github.com/${GITHUB_USERNAME}/spring-rest"
 
 ### empty commit
+echo
 echo to create an empty commit:
 echo "git commit -m "empty-commit" --allow-empty && git push origin master"
+
+### follow logs
+echo
+echo to follow logs:
+echo "tkn pipeline logs -f"
+echo
