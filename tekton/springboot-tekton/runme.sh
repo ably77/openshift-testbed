@@ -12,6 +12,12 @@ echo "     - public_repo"
 echo "     - admin: repo_hook"
 echo
 
+### Display cluster URL
+echo "Displaying cluster URL for convenience"
+oc cluster-info | awk 'NR==1{ print $6 }'
+echo "Cluster URL should follow this convention: https://api.<CLUSTER_NAME>.<CLUSTER_DOMAIN>:6443"
+echo
+
 read -p 'Cluster Name: ' CLUSTER_NAME
 echo $CLUSTER_NAME
 
