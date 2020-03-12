@@ -14,6 +14,8 @@ oc delete -f argocd/apps/testing/
 
 # delete argocd
 oc delete -f https://raw.githubusercontent.com/argoproj/argo-cd/v${argo_version}/manifests/install.yaml -n ${argo_namespace}
+
+# Bits for Operatorhub (future WIP)
 #oc delete -f argocd/testing/cr.yaml
 #oc delete -f argocd/testing/subscription.yaml
 #oc delete -f argocd/testing/operator-group.yaml
