@@ -7,7 +7,7 @@ mkdir generated_examples
 
 ### openshift-testbed automatically deploys a cluster autoscaler, you can see the details at:
 ### https://github.com/ably77/openshift-testbed-argo-shared/blob/master/clusterautoscaler.yaml
-./setup_clusterautoscaler.sh
+#./setup_clusterautoscaler.sh
 
 ### setup machine autoscaler
 ./setup_machineautoscaler.sh
