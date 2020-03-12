@@ -25,13 +25,16 @@ oc new-project ${argo_namespace}
 
 # Apply the ArgoCD Install Manifest
 oc apply -f https://raw.githubusercontent.com/argoproj/argo-cd/v${argo_version}/manifests/install.yaml -n ${argo_namespace}
+
+# testing argo operator from operatorhub
 #oc create -f argocd/testing/operator-group.yaml
 #oc create -f argocd/testing/subscription.yaml
 
 # Create the argocd cluster
 #oc create -f argocd/testing/cr.yaml
 
-./extras/wait-for-condition.sh argocd-server ${argo_namespace}
+# wait for
+./extras/waitfor-pod -n ${argo_namespace} -t 10 argocd-server
 
 # Get the ArgoCD Server password
 argocd_server_password=$(oc -n ${argo_namespace} get pod -l "app.kubernetes.io/name=argocd-server" -o jsonpath='{.items[*].metadata.name}')
@@ -48,7 +51,7 @@ oc -n ${argo_namespace} create route edge argocd-server --service=argocd-server 
 argocd_route=$(oc -n ${argo_namespace} get route argocd-server -o jsonpath='{.spec.host}')
 
 # wait for patch re-deployment
-./extras/wait-for-condition.sh argocd-server ${argo_namespace}
+./extras/waitfor-pod -n ${argo_namespace} -t 10 argocd-server
 
 # sleep for route creation
 #echo sleeping for 30 seconds for route creation
@@ -59,9 +62,6 @@ argocd --insecure --grpc-web login ${argocd_route}:443 --username admin --passwo
 
 # Update admin's password
 argocd --insecure --grpc-web --server ${argocd_route}:443 account update-password --current-password ${argocd_server_password} --new-password ${new_password}
-
-# Open route
-#open http://${argocd_route}
 
 # Add repo to be managed to argo repositories
 argocd repo add ${repo1_url}

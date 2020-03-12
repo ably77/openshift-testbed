@@ -2,11 +2,6 @@
 
 # Codeready Parameters
 CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-argo-codeready/master/dev-file/strimzi-demo-devfile.yaml"
-CODEREADY_NAMESPACE="codeready"
-
-# Don't change unless you change argocd/<app>.yaml namespace pointers
-KAFKA_NAMESPACE="myproject"
-GRAFANA_NAMESPACE="myproject"
 
 #### Create demo CRDs
 oc create -f crds/
@@ -30,7 +25,7 @@ echo now deploying argoCD
 ./argocd/runme.sh
 
 ### Open argocd route
-argocd_route=$(oc -n argocd get route argocd-server -o jsonpath='{.spec.host}')
+argocd_route=$(oc get routes --all-namespaces | grep argocd-server-argocd.apps. | awk '{ print $3 }')
 open http://${argocd_route}
 
 echo sleeping 10 seconds before deploying argo apps
@@ -45,11 +40,11 @@ oc create -f argocd/apps/1/
 
 ### check kafka deployment status
 echo waiting for kafka deployment to complete
-./extras/wait-for-condition.sh my-cluster-kafka-2 ${KAFKA_NAMESPACE}
+./extras/waitfor-pod -t 20 my-cluster-kafka-2
 
 ### check grafana deployment status
 echo checking grafana deployment status before deploying applications
-./extras/wait-for-condition.sh grafana-deployment ${GRAFANA_NAMESPACE}
+./extras/waitfor-pod -t 10 grafana-deployment
 
 ### deploy IoT demo and strimzi-loadtest application in argocd
 echo creating iot-demo and strimzi-loadtest apps in argocd
@@ -57,16 +52,16 @@ oc create -f argocd/apps/2/
 
 ### open grafana route
 echo opening grafana route
-grafana_route=$(oc get routes -n ${GRAFANA_NAMESPACE} | grep grafana-route | awk '{ print $2 }')
+grafana_route=$(oc get routes --all-namespaces | grep grafana-route-myproject.apps | awk '{ print $3 }')
 open https://${grafana_route}
 
 ### Wait for IoT Demo
-./extras/wait-for-condition.sh consumer-app myproject
+./extras/waitfor-pod -t 10 consumer-app
 
 ### open IoT demo app route
 echo opening consumer-app route
 # fix this static address
-iot_route=$(oc get routes -n ${KAFKA_NAMESPACE} | grep consumer-app-myproject.apps | awk '{ print $2 }')
+iot_route=$(oc get routes --all-namespaces | grep consumer-app-myproject.apps | awk '{ print $3 }')
 open http://${iot_route}
 
 ### switch to codeready namespace
@@ -77,7 +72,7 @@ oc project codeready
 
 ### create/open codeready workspace from custom URL dev-file.yaml
 echo deploying codeready workspace
-CHE_HOST=$(oc get routes -n ${CODEREADY_NAMESPACE} | grep codeready-codeready.apps | awk '{ print $2 }')
+CHE_HOST=$(oc get routes --all-namespaces | grep codeready-codeready.apps | awk '{ print $3 }')
 open http://${CHE_HOST}/f?url=${CODEREADY_DEVFILE_URL}
 
 ### end

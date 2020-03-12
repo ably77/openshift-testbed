@@ -26,7 +26,7 @@ fi
 ./argocd/uninstall.sh
 
 # delete CRDs
-oc delete -f crds/ --context=main
+oc delete -f crds/
 
 # Delete argocd project
 oc delete project argocd
