@@ -19,7 +19,7 @@ Optional:
 Lab instructions have been created to help walk you through the capabilities of `openshift-testbed`
 - [Lab 1.1 - Cluster Installation on Azure](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab1.1-Cluster_Installation_Azure)
 - [Lab 1.2 - Cluster Installation on AWS](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab1.2-Cluster_Installation_AWS)
-- [Lab 2 - Installing Openshift Testbed ]https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab2-Install_Openshift_Testbed)
+- [Lab 2 - Installing Openshift Testbed](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab2-Install_Openshift_Testbed)
 - [Lab 3 - Deploy a Spring Boot Tekton Pipeline with Git Push Webhook Trigger](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab3-Deploy_Springboot_Pipeline)
 - [Lab 4 - Demonstrating Codeready Workspaces](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab4-CodeReady_Workspaces)
 - [Lab 5 - Configuration Management Using ArgoCD + Tekton Pipelines with CodeReady Workspaces](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab5-Deploy-Voteapp-Pipeline)
