@@ -5,10 +5,12 @@ Examples Concepts demonstrated:
 - Real-time Streaming IoT Application with Console
 - ArgoCD driven Continuous Delivery for all components (Kafka, Grafana, Prometheus, load-testing demo, iot-demo app)
 - GitOps workflow
+- Configuration management with GitOps and argoCD
 - Prometheus metrics
 - Grafana Dashboards
 - CodeReady Workspaces
 - Tekton Build Pipelines
+- Scaling and Upgrading your cluster
 
 Optional:
 - Multi-cluster demonstration
@@ -34,15 +36,17 @@ Lab instructions have been created to help walk you through the capabilities of 
 [![Youtube Video Demonstration](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/youtube1.png)](https://youtu.be/Mt0RzqFKnrY)
 
 ## Prerequisites for Lab:
-- Multi Node Openshift/Kubernetes Cluster - (This guide is tested on 2x r5.xlarge workers)
+- Multi Node Openshift Cluster - this guide has been tested on:
+     - AWS - 2x r5.xlarge workers (4CPU x 32GB RAM)
+     - Azure - 2x Standard_D3s_v3 workers (4CPU x 16GB RAM)
 - Admin Privileges (i.e. cluster-admin RBAC privileges or logged in as system:admin user)
-- ArgoCLI Installed (see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md)
-- oc client installed (see https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/)
-- Storage (this demo is tested on AWS using EBS as the storage backend)
+- `argo` client installed (see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md)
+- `oc` client installed (see https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/)
+- Tekton `tkn` client installed
+- Storage configured on cluster (this demo has been tested on AWS and Azure storage)
 
 ## Running this Demo
 
-#### Running with ArgoCD and Codeready Workspaces - Deployment Workflow + Streaming App Platform Demo
 If you have an Openshift cluster up, `argocd` CLI installed, and are authenticated to the `oc` CLI just run the installation script below. The script itself has more commented information on the steps and commands if you prefer to run through this demo manually.
 ```
 ./runme.sh
@@ -68,19 +72,19 @@ This script will:
 - Create an Eclipse Che cluster with this demo's repositories
 - Deploy Tekton Pipelines Operator using ArgoCD
 
-## Overview
+## About Kafka
 Apache Kafka is a highly scalable and performant distributed event streaming platform great for storing, reading, and analyzing streaming data. Originally created at LinkedIn, the project was open sourced to the Apache Foundation in 2011. Kafka enables companies looking to move from traditional batch processes over to more real-time streaming use cases.
 
 ![](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/architecture1.jpg)
 
 The diagram above is a common example of many fast-data (streaming) solutions today. With kafka as a core component of your architecture, multiple raw data sources can pipe data to Kafka, be analyzed in real-time by tools such as Apache Spark, and persisted or consumed by other microservices
 
-### Kubernetes Operators
+### About Kubernetes Operators
 An Operator is a method of packaging, deploying and managing a Kubernetes application. A Kubernetes application is an application that is both deployed on Kubernetes and managed using the Kubernetes APIs and kubectl tooling. With Operators, the kubernetes community gains a standardized way to build, deploy, operate, upgrade, and troubleshoot Kubernetes applications.
 
 The full list of Operators can be found on [operatorhub.io](https://operatorhub.io/), the home for the Kubernetes community to share Operators.
 
-#### Strimzi Kafka Operator
+#### About the Strimzi Kafka Operator
 Today we will be using the [strimzi.io](https://operatorhub.io/operator/strimzi-kafka-operator) Kafka Operator. Strimzi makes it easy to run Apache Kafka on OpenShift or Kubernetes.
 
 Strimzi provides three operators:
@@ -94,7 +98,7 @@ Responsible for managing Kafka topics within a Kafka cluster running within an O
 User Operator
 Responsible for managing Kafka users within a Kafka cluster running within an OpenShift or Kubernetes cluster.
 
-#### Integr8ly Grafana Operator
+#### About the Integr8ly Grafana Operator
 A Kubernetes Operator based on the Operator SDK for creating and managing Grafana instances.
 
 The Operator is available on [Operator Hub](https://operatorhub.io/operator/grafana-operator).
@@ -110,14 +114,14 @@ Why Grafana?
 - Quickly becoming a de-facto standard in cloud-native monitoring
 - Strong community support
 
-#### ArgoCD Operator
+#### About ArgoCD
 Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.
 
 Why Argo CD?
 - Application definitions, configurations, and environments should be declarative and version controlled.
 - Application deployment and lifecycle management should be automated, auditable, and easy to understand.
 
-#### Codeready Workspaces Operator
+#### About the Codeready Workspaces Operator
 Red Hat CodeReady Workspaces is a developer workspace server and cloud IDE. Workspaces are defined as project code files and all of their dependencies neccessary to edit, build, run, and debug them. Each workspace has its own private IDE hosted within it. The IDE is accessible through a browser. The browser downloads the IDE as a single-page web application.
 
 Red Hat CodeReady Workspaces provides:
