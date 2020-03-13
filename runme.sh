@@ -31,9 +31,6 @@ open http://${argocd_route}
 echo sleeping 10 seconds before deploying argo apps
 sleep 10
 
-### create main argocd project
-oc create -f argocd/main-project.yaml
-
 ### deploy apps in argocd
 echo deploying prometheus, kafka, grafana, and codeready applications in argocd
 oc create -f argocd/apps/1/
