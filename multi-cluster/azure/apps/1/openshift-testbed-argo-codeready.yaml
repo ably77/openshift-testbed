@@ -12,7 +12,7 @@ spec:
     targetRevision: HEAD
     path: .
   destination:
-    server: https://api.ly-demo-ly-ocpazure.com:6443
+    server: https://api.ly-demo.azureocp.com:6443
     namespace: codeready
   syncPolicy:
     automated:

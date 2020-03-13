@@ -6,13 +6,13 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: dr
+  project: azure
   source:
     repoURL: https://github.com/ably77/openshift-testbed-argo-prometheus
     targetRevision: HEAD
     path: .
   destination:
-    server: https://api.ly-demo-ly-ocpazure.com:6443
+    server: https://api.ly-demo.azureocp.com:6443
     namespace: myproject
   syncPolicy:
     automated:
