@@ -32,9 +32,6 @@ Lab instructions have been created to help walk you through the capabilities of 
 - [Lab End - Destroying the Cluster](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab_End-Destroying_the_Cluster)
 - [Extras](https://github.com/ably77/Standard-OCP-Workshop/tree/master/Lab9-Chaos_Engineering)
 
-## Youtube Video Demonstration
-[![Youtube Video Demonstration](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/youtube1.png)](https://youtu.be/Mt0RzqFKnrY)
-
 ## Prerequisites for Lab:
 - Multi Node Openshift Cluster - this guide has been tested on:
      - AWS - 2x r5.xlarge workers (4CPU x 32GB RAM)
