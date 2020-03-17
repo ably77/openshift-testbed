@@ -19,6 +19,7 @@ repo8_url="https://github.com/ably77/openshift-testbed-argo-grafana"
 repo9_url="https://github.com/ably77/openshift-testbed-argo-kafka"
 repo10_url="https://github.com/ably77/openshift-testbed-argo-shared"
 repo11_url="https://github.com/ably77/openshift-testbed-argo-tekton"
+repo12_url="https://github.com/ably77/openshift-testbed-airlineprediction"
 
 # Create a new namespace for ArgoCD components
 oc new-project ${argo_namespace}
@@ -75,6 +76,7 @@ argocd repo add ${repo8_url}
 argocd repo add ${repo9_url}
 argocd repo add ${repo10_url}
 argocd repo add ${repo11_url}
+argocd repo add ${repo12_url}
 
 
 # Add argocd main project
