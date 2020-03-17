@@ -34,7 +34,7 @@ Lab instructions have been created to help walk you through the capabilities of 
 
 ## Prerequisites for Lab:
 - Multi Node Openshift Cluster - this guide has been tested on:
-     - AWS - 2x r5.xlarge workers (4CPU x 32GB RAM)
+     - AWS - 2x m5.xlarge workers (4CPU x 16GB RAM)
      - Azure - 2x Standard_D3s_v3 workers (4CPU x 16GB RAM)
 - Admin Privileges (i.e. cluster-admin RBAC privileges or logged in as system:admin user)
 - `argo` client installed (see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md)
