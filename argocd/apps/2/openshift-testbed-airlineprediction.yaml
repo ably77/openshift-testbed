@@ -16,7 +16,7 @@ spec:
     path: .
   destination:
     server: https://kubernetes.default.svc
-    namespace: myproject
+    namespace: airlineprediction
   syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
