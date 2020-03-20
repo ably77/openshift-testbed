@@ -13,7 +13,7 @@ spec:
     path: .
   destination:
     server: https://api.ly-demo-eu.openshiftaws.com:6443
-    namespace: myproject
+    namespace: strimzi-loadtest
   syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).

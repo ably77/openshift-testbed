@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: openshift-testbed-argo-iotdemo-dr
+  name: openshift-testbed-argo-grafana-gcp
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: dr
+  project: gcp
   source:
-    repoURL: https://github.com/ably77/openshift-testbed-argo-iotdemo
+    repoURL: https://github.com/ably77/openshift-testbed-argo-grafana
     targetRevision: HEAD
     path: .
   destination:
-    server: https://api.ly-demo-dr.openshiftaws.com:6443
-    namespace: iot-dashboard
+    server: https://api.ly-demo.gcpocp.com:6443
+    namespace: myproject
   syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).

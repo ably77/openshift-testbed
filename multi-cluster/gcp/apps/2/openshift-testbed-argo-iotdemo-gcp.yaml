@@ -1,18 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: openshift-testbed-argo-iotdemo-dr
+  name: openshift-testbed-argo-iotdemo-gcp
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  project: dr
+  project: gcp
   source:
     repoURL: https://github.com/ably77/openshift-testbed-argo-iotdemo
     targetRevision: HEAD
     path: .
   destination:
-    server: https://api.ly-demo-dr.openshiftaws.com:6443
+    server: https://api.ly-demo.gcpocp.com:6443
     namespace: iot-dashboard
   syncPolicy:
     automated:
