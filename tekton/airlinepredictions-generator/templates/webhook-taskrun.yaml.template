@@ -22,6 +22,6 @@ spec:
     - name: GitHubSecretStringKey
       value: secret
     - name: ExternalDomain
-      value: http://github-webhook-event-listener-<GITHUB_USERNAME>-cicd-environment.apps.<CLUSTER_NAME>.<CLUSTER_DOMAIN>
+      value: http://githubap-webhook-event-listener-<GITHUB_USERNAME>-cicd-environment.apps.<CLUSTER_NAME>.<CLUSTER_DOMAIN>
   timeout: 1000s
   serviceAccountName: tekton-triggers-createwebhook

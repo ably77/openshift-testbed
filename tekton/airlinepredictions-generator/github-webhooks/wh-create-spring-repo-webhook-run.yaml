@@ -22,6 +22,6 @@ spec:
     - name: GitHubSecretStringKey
       value: secret
     - name: ExternalDomain
-      value: http://github-webhook-event-listener-ably77-cicd-environment.apps.ly-demo.openshiftaws.com
+      value: http://githubap-webhook-event-listener-ably77-cicd-environment.apps.ly-demo.openshiftaws.com
   timeout: 1000s
   serviceAccountName: tekton-triggers-createwebhook
