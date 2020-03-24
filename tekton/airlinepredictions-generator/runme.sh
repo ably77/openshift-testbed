@@ -47,15 +47,14 @@ sed -e "s/<GITHUB_ORG>/${GITHUB_ORG}/g" -e "s/<GITHUB_USERNAME>/${GITHUB_USERNAM
 
 oc new-project airlineprediction-generator-dev
 oc new-project airlineprediction-generator-staging
-oc new-project ${GITHUB_USERNAME}-cicd-environment
+oc new-project airlineprediction-generator-build
 
 # create regcred secret
 #oc create secret generic regcred --from-file=.dockerconfigjson="${QUAY_USERNAME}-airlinepredictiongenerator-auth.json" --type=kubernetes.io/dockerconfigjson
-oc create -f regcred-secret.yaml
+oc create -f secrets/
 
 # bind admin Cluster Role to airlineprediction-sa in dev-environment and stage-environment projects
-oc create -f rolebindings/airlineprediction-sa-admin-dev_rb.yaml
-oc create -f rolebindings/airlineprediction-sa-admin-stage_rb.yaml
+oc create -f rolebindings/
 
 # run tasks
 cat fullpipeline.yaml  | sed s"/\$QUAY_USERNAME/$QUAY_USERNAME/" | sed s"/\$GITHUB_USERNAME/$GITHUB_USERNAME/" | sed s"/\$DEPLOYMENT_PATH/$DEPLOYMENT_PATH/" | oc apply -f -

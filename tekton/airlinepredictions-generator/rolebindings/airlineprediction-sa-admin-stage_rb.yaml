@@ -10,4 +10,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: airlineprediction-sa
-  namespace: ably77-cicd-environment
+  namespace: airlineprediction-generator-build
