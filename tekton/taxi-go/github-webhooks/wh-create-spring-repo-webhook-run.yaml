@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
+  name: create-taxi-repo-webhook-run
+spec:
+  taskRef:
+    name: create-webhook
+  inputs:
+    params:
+    - name: GitHubOrg
+      value: "ably77"
+    - name: GitHubUser
+      value: "ably77"
+    - name: GitHubRepo
+      value: "taxi"
+    - name: GitHubSecretName
+      value: webhook-secret
+    - name: GitHubAccessTokenKey
+      value: token
+    - name: GitHubSecretStringKey
+      value: secret
+    - name: ExternalDomain
+      value: http://github-webhook-event-listener-ably77-cicd-environment.apps.ly-demo.openshiftaws.com
+  timeout: 1000s
+  serviceAccountName: tekton-triggers-createwebhook
