@@ -10,21 +10,6 @@ The focus of openshift-testbed is to show value in the following key areas:
 
 ## Concepts/Examples
 
-Backend Platform Components:
-- ArgoCD (gitops + continuous delivery)
-- Kafka (streaming pub/sub)
-- Prometheus (metrics)
-- Grafana (dashboards)
-
-Frontend Applications:
-- Real-time Streaming Temperature IoT Dashboard Application
-- Basic Spring Boot tekton pipeline
-- Airline Prediction Generator (kafka producer) tekton pipeline
-- Airline Prediction Kafka Stream
-- Taxi Go app tekton pipeline
-- Cat/Dog vote app tekton pipeline
-- Kafka load testing app
-
 Developer Tooling:
 - Tekton (pipelines)
 - CodeReady Workspaces (web-based IDE)
@@ -47,6 +32,23 @@ Operations:
 - Multi-cloud demonstration
 - Chaos Engineering
 - Centralized Configuration Management
+
+## Platform Components and Application Examples
+
+Backend Platform Components:
+- ArgoCD (gitops + continuous delivery)
+- Kafka (streaming pub/sub)
+- Prometheus (metrics)
+- Grafana (dashboards)
+
+Frontend Applications:
+- Real-time Streaming Temperature IoT Dashboard Application
+- Basic Spring Boot tekton pipeline
+- Airline Prediction Generator (kafka producer) tekton pipeline
+- Airline Prediction Kafka Stream
+- Taxi Go app tekton pipeline
+- Cat/Dog vote app tekton pipeline
+- Kafka load testing app
 
 ## Workshop Labs
 Lab instructions have been created to help walk you through the capabilities of `openshift-testbed`
