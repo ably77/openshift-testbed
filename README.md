@@ -102,6 +102,32 @@ This script will:
 - Create an Eclipse Che cluster with this demo's repositories
 - Deploy Tekton Pipelines Operator using ArgoCD
 
+## About GitOps
+GitOps is a set of practices that use `git pull` requests to manage infrastructure and application configurations. A Git repository in GitOps is considered the only source of truth and contains the entire state of the system so that the trail of changes to the system state are visible and auditable.
+
+Below is an example architectural diagram of a GitOps workflow
+![](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/architecture2.jpg)
+
+### GitOps Principles
+- The definition of our systems is described as code
+The configuration for our systems can be treated as code, so we can store it and have it automatically versioned in Git, our single source of truth. This way, it is possible rollout and rollback changes in our systems in an easy way.
+
+- The desired system state and configuration is defined and versioned in Git
+Having the desired configuration of our systems stored and versioned in Git give us the ability to rollout / rollback changes easily to our systems and applications. On top of that we can leverage Git’s security mechanisms in order to ensure the ownership and provence of the code.
+
+- Changes to the configuration can be automatically applied using PR mechanisms
+Using Git Pull Requests we can manage in an easy way how changes are applied to the stored configuration, you can request reviews from different team members, run CI tests, etc. On top of that you don’t need to share your cluster credentials with anyone, the person committing the change only needs access to the Git repository where the configuration is stored.
+
+- There is a controller that ensures no configuration drifts are present
+As the desired system state is present in Git, we only need a software that makes sure the current system state matches the desired system state. In case the states differ this software should be able to self-heal or notify the drift based on its configuration.
+
+### About ArgoCD
+Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.
+
+Why Argo CD?
+- Application definitions, configurations, and environments should be declarative and version controlled.
+- Application deployment and lifecycle management should be automated, auditable, and easy to understand.
+
 ## About Kafka
 Apache Kafka is a highly scalable and performant distributed event streaming platform great for storing, reading, and analyzing streaming data. Originally created at LinkedIn, the project was open sourced to the Apache Foundation in 2011. Kafka enables companies looking to move from traditional batch processes over to more real-time streaming use cases.
 
@@ -143,13 +169,6 @@ It can deploy and manage a Grafana instance on Kubernetes and OpenShift. The fol
 Why Grafana?
 - Quickly becoming a de-facto standard in cloud-native monitoring
 - Strong community support
-
-#### About ArgoCD
-Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes.
-
-Why Argo CD?
-- Application definitions, configurations, and environments should be declarative and version controlled.
-- Application deployment and lifecycle management should be automated, auditable, and easy to understand.
 
 #### About the Codeready Workspaces Operator
 Red Hat CodeReady Workspaces is a developer workspace server and cloud IDE. Workspaces are defined as project code files and all of their dependencies neccessary to edit, build, run, and debug them. Each workspace has its own private IDE hosted within it. The IDE is accessible through a browser. The browser downloads the IDE as a single-page web application.
