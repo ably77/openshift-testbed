@@ -106,7 +106,7 @@ This script will:
 GitOps is a set of practices that use `git pull` requests to manage infrastructure and application configurations. A Git repository in GitOps is considered the only source of truth and contains the entire state of the system so that the trail of changes to the system state are visible and auditable.
 
 Below is an example architectural diagram of a GitOps workflow
-![](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/architecture2.png)
+![](https://github.com/ably77/openshift-testbed/blob/master/resources/architecture2.png)
 
 ### GitOps Principles
 - The definition of our systems is described as code
@@ -131,7 +131,7 @@ Why Argo CD?
 ## About Kafka
 Apache Kafka is a highly scalable and performant distributed event streaming platform great for storing, reading, and analyzing streaming data. Originally created at LinkedIn, the project was open sourced to the Apache Foundation in 2011. Kafka enables companies looking to move from traditional batch processes over to more real-time streaming use cases.
 
-![](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/architecture1.jpg)
+![](https://github.com/ably77/openshift-testbed/blob/master/resources/architecture1.jpg)
 
 The diagram above is a common example of many fast-data (streaming) solutions today. With kafka as a core component of your architecture, multiple raw data sources can pipe data to Kafka, be analyzed in real-time by tools such as Apache Spark, and persisted or consumed by other microservices
 
