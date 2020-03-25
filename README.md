@@ -106,7 +106,7 @@ This script will:
 GitOps is a set of practices that use `git pull` requests to manage infrastructure and application configurations. A Git repository in GitOps is considered the only source of truth and contains the entire state of the system so that the trail of changes to the system state are visible and auditable.
 
 Below is an example architectural diagram of a GitOps workflow
-![](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/architecture2.jpg)
+![](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/architecture2.png)
 
 ### GitOps Principles
 - The definition of our systems is described as code
