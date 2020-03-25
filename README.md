@@ -1,6 +1,13 @@
 # Openshift Test Bed
 The purpose of this repo is to show several examples of Openshift and upstream Kubernetes concepts as reference examples that can be used and expanded on.
 
+### Business Value Goals:
+The focus of openshift-testbed is to show value in the following key areas:
+- Standardization
+- Reliability
+- Observability
+- Automation
+
 ## Concepts/Examples
 
 Backend Platform Components:
