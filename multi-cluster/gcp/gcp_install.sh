@@ -52,7 +52,7 @@ open https://${grafana_route}
 
 ### open IoT demo app route
 echo opening consumer-app route
-iot_route=$(oc get routes --all-namespaces --context=${CONTEXT_NAME} | grep consumer-app-myproject.apps | awk '{ print $3 }')
+iot_route=$(oc get routes --all-namespaces --context=${CONTEXT_NAME} | grep consumer-app-iot-dashboard.apps | awk '{ print $3 }')
 open http://${iot_route}
 
 ### wait for codeready workspace to deploy
