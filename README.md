@@ -1,21 +1,40 @@
 # Openshift Test Bed
 The purpose of this repo is to show several examples of Openshift and upstream Kubernetes concepts as reference examples that can be used and expanded on.
 
-Examples Concepts demonstrated:
-- Real-time Streaming IoT Application with Console
-- ArgoCD driven Continuous Delivery for all components (Kafka, Grafana, Prometheus, load-testing demo, iot-demo app)
-- GitOps workflow
-- Configuration management with GitOps and argoCD
-- Prometheus metrics
-- Grafana Dashboards
-- CodeReady Workspaces
-- Tekton Build Pipelines
-- Scaling and Upgrading your cluster
+Backend Platform Components:
+- ArgoCD (gitops + continuous delivery)
+- Kafka (streaming pub/sub)
+- Prometheus (metrics)
+- Grafana (dashboards)
 
-Optional:
-- Multi-cluster demonstration
+Frontend Applications Examples:
+- Real-time Streaming Temperature IoT Dashboard Application
+- Basic Spring Boot tekton pipeline
+- Airline Prediction Generator (kafka producer) tekton pipeline
+- Airline Prediction Kafka Stream
+- Taxi Go app tekton pipeline
+- Cat/Dog vote app tekton pipeline
+- Kafka load testing app
+
+Developer Tooling Examples:
+- Tekton (pipelines)
+- CodeReady Workspaces
+- argoCD developer workflow
+
+Cloud Native Development Concepts:
+- Streaming Architectures
+- GitOps workflow
+- Cloud Native CI/CD
+- Centralized Configuration Management
+- Introductory ML/AI
+
+Operations Concepts:
+- Scaling and Upgrading your cluster
 - Autoscaling
-- Infrastructure pinning
+- Infrastructure Node Pools
+- Monitoring
+- Multi-cluster demonstration
+- Multi-cloud demonstration
 
 ## Workshop Labs
 Lab instructions have been created to help walk you through the capabilities of `openshift-testbed`
