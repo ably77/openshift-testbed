@@ -7,6 +7,7 @@ The focus of openshift-testbed is to show value in the following key areas:
 - Reliability
 - Observability
 - Automation
+- Self Service
 
 ## Platform Components and Application Examples
 
