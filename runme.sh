@@ -31,6 +31,10 @@ open http://${argocd_route}
 echo sleeping 10 seconds before deploying argo apps
 sleep 10
 
+# label node for jitsi video (podium)
+random_node=$(oc get nodes | grep worker | awk 'NR==1{ print $1 }')
+oc label node $random_node app=jvb
+
 ### deploy apps in argocd
 echo deploying prometheus, kafka, grafana, and codeready applications in argocd
 oc create -f argocd/apps/1/
