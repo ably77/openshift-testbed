@@ -22,6 +22,6 @@ spec:
     - name: GitHubSecretStringKey
       value: secret
     - name: ExternalDomain
-      value: http://webhook-airlineprediction-generator-build.apps.ly-demo.openshiftaws.com
+      value: http://webhook-airlineprediction-generator-build.apps.ly-demo.west.aws.redhat-demo.com
   timeout: 1000s
   serviceAccountName: tekton-triggers-createwebhook
