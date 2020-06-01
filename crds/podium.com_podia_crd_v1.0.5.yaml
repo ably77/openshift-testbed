@@ -9,13 +9,14 @@ spec:
     listKind: PodiumList
     plural: podia
     singular: podium
-  scope: Cluster
+  scope: Namespaced
   subresources:
     status: {}
   validation:
     openAPIV3Schema:
       type: object
       x-kubernetes-preserve-unknown-fields: true
+  version: v1alpha1
   versions:
   - name: v1alpha1
     served: true
