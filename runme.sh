@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Codeready Parameters
-CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-argo-codeready/master/dev-file/strimzi-demo-devfile.yaml"
+CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/codeready-workspaces/dev-file/strimzi-demo-devfile.yaml"
 
 #### Create demo CRDs
 oc create -f crds/
@@ -21,15 +21,28 @@ fi
 
 echo now deploying argoCD
 
-### deploy ArgoCD
-./argocd/runme.sh
+# create argocd namespace
+oc new-project argocd
+
+# Apply the ArgoCD Install Manifest
+oc create -f argocd/argocd_operator.yaml
+
+# wait for
+./extras/waitfor-pod -n argocd -t 10 argocd-application-controller
+
+# sleep for 45 seconds
+echo "sleeping for 45 seconds for argocd to finish installing"
+sleep 45
+
+# Add argocd main project
+oc create -f argocd/main-project.yaml
+
+# add argocd repos
+./argocd/add_repos.sh
 
 ### Open argocd route
 argocd_route=$(oc get routes --all-namespaces | grep argocd-server-argocd.apps. | awk '{ print $3 }')
 open http://${argocd_route}
-
-echo sleeping 10 seconds before deploying argo apps
-sleep 10
 
 # label node for jitsi video (podium - hacky fix this later)
 random_node1=$(oc get nodes | grep worker | awk 'NR==1{ print $1 }')
@@ -52,6 +65,10 @@ echo checking grafana deployment status before deploying applications
 ### deploy IoT demo and strimzi-loadtest application in argocd
 echo creating iot-demo and strimzi-loadtest apps in argocd
 oc create -f argocd/apps/2/
+
+### deploy manuela iot app
+echo creating manuela iot app
+oc create -f argocd/apps/testing/manuela-gitops/
 
 ### open grafana route
 echo opening grafana route

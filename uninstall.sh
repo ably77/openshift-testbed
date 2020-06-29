@@ -14,22 +14,33 @@ then
 fi
 
 # Removing Argo/IoT demo from dr cluster (if it exists)
-./multi-cluster/dr/dr_uninstall.sh
+#./multi-cluster/dr/dr_uninstall.sh
 
 # Removing Argo/IoT demo from eu cluster (if it exists)
-./multi-cluster/eu/eu_uninstall.sh
+#./multi-cluster/eu/eu_uninstall.sh
 
 # Removing Argo/IoT demo from azure cluster (if it exists)
-./multi-cluster/azure/azure_uninstall.sh
+#./multi-cluster/azure/azure_uninstall.sh
 
 # Removing Argo/IoT demo from azure cluster (if it exists)
-./multi-cluster/gcp/gcp_uninstall.sh
+#./multi-cluster/gcp/gcp_uninstall.sh
 
-# Removing Argo/IoT demo from main cluster (if it exists)
-./argocd/uninstall.sh
+# delete argo apps
+oc delete -f argocd/apps/2/
+oc delete -f argocd/apps/1/
+oc delete -f argocd/apps/testing/
+
+# Wait for app deletion
+./extras/wait-for-argo-app-deletion.sh
+
+# delete argocd
+oc delete -f argocd/argocd_operator.yaml
 
 # delete CRDs
 oc delete -f crds/
+
+# delete CSVs
+oc delete csv -n openshift-operators --all
 
 # Delete argocd project
 oc delete project argocd

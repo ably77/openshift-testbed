@@ -71,7 +71,7 @@ echo setting up github webhook
 # instructions
 echo
 echo Fork this repo if you havent already
-echo https://github.com/bigkevmcd/airlineprediction-generator
+echo https://github.com/ably77/airlineprediction-generator.git
 
 echo
 echo Clone your forked repo so you can push to it
