@@ -66,10 +66,6 @@ echo checking grafana deployment status before deploying applications
 echo creating iot-demo and strimzi-loadtest apps in argocd
 oc create -f argocd/apps/2/
 
-### deploy manuela iot app
-echo creating manuela iot app
-oc create -f argocd/apps/testing/manuela-gitops/
-
 ### open grafana route
 echo opening grafana route
 grafana_route=$(oc get routes --all-namespaces | grep grafana-route-myproject.apps | awk '{ print $3 }')
