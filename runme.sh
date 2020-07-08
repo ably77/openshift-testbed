@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Codeready Parameters
-CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/codeready-workspaces/dev-file/strimzi-demo-devfile.yaml"
+CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/codeready-workspaces/dev-file/openshift-testbed-dev-file.yaml"
 
 #### Create demo CRDs
 oc create -f crds/
