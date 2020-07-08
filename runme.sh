@@ -3,13 +3,13 @@
 # Codeready Parameters
 CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/codeready-workspaces/dev-file/openshift-testbed-dev-file.yaml"
 
-#### Create demo CRDs
-oc create -f crds/
+#### Create artemis CRDs
+oc create -f extras/crds/
 
 # run argocd install script
 ./argocd/runme.sh
 
-# label node for jitsi video (podium - hacky fix this later)
+# label node for jitsi video
 random_node1=$(oc get nodes | grep worker | awk 'NR==1{ print $1 }')
 random_node2=$(oc get nodes | grep worker | awk 'NR==2{ print $1 }')
 oc label node $random_node1 app=jvb

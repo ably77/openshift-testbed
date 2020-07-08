@@ -51,7 +51,7 @@ oc delete project argocd
 oc project default
 
 # delete CRDs
-oc delete -f crds/
+oc delete -f extras/crds/
 oc delete crd checlusters.org.eclipse.che
 oc delete crd grafanadashboards.integreatly.org grafanadatasources.integreatly.org grafanas.integreatly.org
 oc delete crd podia.podium.com
