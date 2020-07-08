@@ -14,14 +14,19 @@ The focus of openshift-testbed is to show value in the following key areas:
 Backend Platform Components:
 - ArgoCD (gitops + continuous delivery)
 - Kafka (streaming pub/sub)
+- ActiveMQ Artemis (mq)
 - Prometheus (metrics)
-- Grafana (dashboards)
+- Grafana (observability)
+- Openshift Pipelines (CI/CD)
 
 Frontend Applications:
 - Real-time Streaming Temperature IoT Dashboard Application
-- Basic Spring Boot tekton pipeline
+- Podium Collaboration Portal
+- Openshift CodeReady Workspaces - web based IDE
+- manuELA IoT Dashboard
 - Airline Prediction Generator (kafka producer) tekton pipeline
-- Airline Prediction Kafka Stream
+- Airline Prediction Kafka Streams app
+- Basic Spring Boot tekton pipeline
 - Taxi Go app tekton pipeline
 - Cat/Dog vote app tekton pipeline
 - Kafka load testing app
@@ -32,6 +37,7 @@ Developer Tooling:
 - Tekton (pipelines)
 - CodeReady Workspaces (web-based IDE)
 - argoCD developer workflow (GitOps)
+- Git webhooks
 
 Cloud Native App Development:
 - Streaming Architectures
@@ -104,7 +110,7 @@ This script will:
 - Deploy Tekton Pipelines Operator using ArgoCD
 
 ## About GitOps
-GitOps is a set of practices that use `git pull` requests to manage infrastructure and application configurations. A Git repository in GitOps is considered the only source of truth and contains the entire state of the system so that the trail of changes to the system state are visible and auditable.
+GitOps is a set of practices that use git to manage infrastructure and application configurations. A Git repository in GitOps is considered the only source of truth and contains the entire state of the system so that the trail of changes to the system state are visible and auditable.
 
 Below is an example architectural diagram of a GitOps workflow
 ![](https://github.com/ably77/openshift-testbed/blob/master/resources/architecture2.png)
