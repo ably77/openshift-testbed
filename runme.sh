@@ -6,43 +6,8 @@ CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbe
 #### Create demo CRDs
 oc create -f crds/
 
-### Check if argocd CLI is installed
-ARGOCLI=$(which argocd)
-echo checking if argocd CLI is installed
-if [[ $ARGOCLI == "" ]]
-then
-        echo
-        echo "argocd CLI not installed"
-        echo "see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md for installation instructions"
-        echo "re-run the script after argocd CLI is installed"
-        echo
-        exit 1
-fi
-
-echo now deploying argoCD
-
-# create argocd namespace
-oc new-project argocd
-
-# Apply the ArgoCD Install Manifest
-oc create -f argocd/argocd_operator.yaml
-
-# wait for
-./extras/waitfor-pod -n argocd -t 10 argocd-application-controller
-
-# sleep for 45 seconds
-echo "sleeping for 45 seconds for argocd to finish installing"
-sleep 45
-
-# Add argocd main project
-oc create -f argocd/main-project.yaml
-
-# add argocd repos
-./argocd/add_repos.sh
-
-### Open argocd route
-argocd_route=$(oc get routes --all-namespaces | grep argocd-server-argocd.apps. | awk '{ print $3 }')
-open http://${argocd_route}
+# run argocd install script
+./argocd/runme.sh
 
 # label node for jitsi video (podium - hacky fix this later)
 random_node1=$(oc get nodes | grep worker | awk 'NR==1{ print $1 }')
@@ -50,9 +15,38 @@ random_node2=$(oc get nodes | grep worker | awk 'NR==2{ print $1 }')
 oc label node $random_node1 app=jvb
 oc label node $random_node2 app=jvb
 
-### deploy apps in argocd
-echo deploying prometheus, kafka, grafana, and codeready applications in argocd
-oc create -f argocd/apps/1/
+### deploy shared components in argocd
+echo deploying shared components
+oc create -f argocd/apps/shared/
+sleep 5
+
+### deploy operators in argocd
+echo deploying operators
+oc create -f argocd/apps/operators/
+
+### check kafka operator deployment status
+echo waiting for kafka deployment to complete
+./extras/waitfor-pod -t 10 strimzi-cluster-operator-v0.18.0
+
+### check grafana operator deployment status
+echo checking grafana deployment status before deploying applications
+./extras/waitfor-pod -t 10 grafana-operator
+
+### check codeready operator deployment status
+echo checking grafana deployment status before deploying applications
+./extras/waitfor-pod -t 10 codeready-operator
+
+### check openshift pipelines operator deployment status
+echo checking grafana deployment status before deploying applications
+./extras/waitfor-pod -t 10 openshift-pipelines-operator
+
+### check podium operator deployment status
+echo checking grafana deployment status before deploying applications
+./extras/waitfor-pod -t 10 podium-operator
+
+### deploy backend services in argocd
+echo deploying backend app services
+oc create -f argocd/apps/backend/
 
 ### check kafka deployment status
 echo waiting for kafka deployment to complete
@@ -62,21 +56,20 @@ echo waiting for kafka deployment to complete
 echo checking grafana deployment status before deploying applications
 ./extras/waitfor-pod -t 10 grafana-deployment
 
-### deploy IoT demo and strimzi-loadtest application in argocd
-echo creating iot-demo and strimzi-loadtest apps in argocd
-oc create -f argocd/apps/2/
-
 ### open grafana route
 echo opening grafana route
-grafana_route=$(oc get routes --all-namespaces | grep grafana-route-myproject.apps | awk '{ print $3 }')
+grafana_route=$(oc get routes --all-namespaces | grep grafana-route-grafana.apps | awk '{ print $3 }')
 open https://${grafana_route}
+
+### deploy frontend apps in argocd
+echo deploying frontend apps
+oc create -f argocd/apps/frontend/
 
 ### Wait for IoT Demo
 ./extras/waitfor-pod -t 10 consumer-app
 
 ### open IoT demo app route
 echo opening consumer-app route
-# fix this static address
 iot_route=$(oc get routes --all-namespaces | grep consumer-app-iotdemo-app.apps | awk '{ print $3 }')
 open http://${iot_route}
 
@@ -91,22 +84,37 @@ echo deploying codeready workspace
 CHE_HOST=$(oc get routes --all-namespaces | grep codeready-codeready.apps | awk '{ print $3 }')
 open http://${CHE_HOST}/f?url=${CODEREADY_DEVFILE_URL}
 
+### open manuELA IoT dashboard route
+echo opening manuELA IoT dashboard route
+manuela_route=$(oc get routes --all-namespaces | grep line-dashboard-manuela- | awk '{ print $3 }')
+open http://${manuela_route}
+
+### open Podium route
+echo opening podium route
+podium_route=$(oc get routes --all-namespaces | grep podium-podium.apps | awk '{ print $3 }')
+open http://${podium_route}
+
 ### end
 echo
 echo installation complete
 echo
 echo
-echo links to console routes:
+echo links to relevant demo routes:
 echo
-echo iot demo console:
+echo temperature sensors iot demo dashboard:
 echo http://${iot_route}
 echo
 echo grafana dashboards:
 echo https://${grafana_route}
 echo
 echo argocd console:
-echo argocd login: admin/secret
 echo http://${argocd_route}
+echo
+echo manuELA IoT dashboard:
+echo http://${manuela_route}
+echo
+echo podium collaboration dashboard
+echo http://${podium_route}
 echo
 echo codeready workspaces: create a new user to initiate workspace build
 echo http://${CHE_HOST}/f?url=${CODEREADY_DEVFILE_URL}

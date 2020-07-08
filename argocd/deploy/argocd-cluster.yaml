@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: argocd
+  labels:
+    example: route
+spec:
+  dex:
+    image: quay.io/redhat-cop/dex 
+    version: v2.22.0-openshift
+    openShiftOAuth: true
+  rbac:
+    #defaultPolicy: 'role:readonly'
+    defaultPolicy: 'role:admin'
+    policy: |
+      g, system:cluster-admins, role:admin
+    scopes: '[groups]'
+  grafana:
+    enabled: false
+    route:
+      enabled: false
+  prometheus:
+    enabled: false
+    route:
+      enabled: false
+  server:
+    route:
+      enabled: true

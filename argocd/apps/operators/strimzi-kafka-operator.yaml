@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: integreatly-grafana
+  name: strimzi-kafka-operator
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: integreatly-grafana
+    path: strimzi-kafka
   destination:
     server: https://kubernetes.default.svc
     namespace: myproject

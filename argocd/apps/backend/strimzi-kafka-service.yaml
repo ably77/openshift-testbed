@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: codeready-workspaces
+  name: strimzi-kafka-cluster
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: codeready-workspaces
+    path: strimzi-kafka/cr
   destination:
     server: https://kubernetes.default.svc
-    namespace: codeready
+    namespace: myproject
   syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).

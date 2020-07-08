@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: openshift-pipelines
+  name: openshift-pipelines-service
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: openshift-pipelines
+    path: openshift-pipelines/cr
   destination:
     server: https://kubernetes.default.svc
     namespace: pipelines-tutorial
