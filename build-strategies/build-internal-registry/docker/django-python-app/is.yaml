@@ -4,7 +4,7 @@ metadata:
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
   name: blog-django-py
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     app: blog-django-py
     app.kubernetes.io/component: blog-django-py

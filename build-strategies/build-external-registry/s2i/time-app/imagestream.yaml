@@ -2,7 +2,7 @@ kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
   name: python-lyapp
-  namespace: snow
+  namespace: builds-tutorial
   generation: 1
 spec:
   lookupPolicy:

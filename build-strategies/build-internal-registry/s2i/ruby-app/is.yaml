@@ -4,7 +4,7 @@ metadata:
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
   name: ruby-s2i
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     app: ruby-s2i
     buildtype: s2i

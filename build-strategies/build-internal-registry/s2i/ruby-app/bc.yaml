@@ -2,7 +2,7 @@ apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
   name: ruby-s2i-build
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     buildtype: s2i
 spec:
@@ -20,7 +20,9 @@ spec:
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: 'ruby:2.4'
+        #name: 'ruby:2.3'
+        #name: 'ruby:2.4'
+        name: 'ruby:2.5'
         namespace: openshift
       incremental: true
       env: []

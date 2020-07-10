@@ -2,7 +2,7 @@ kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
   name: blog-django-py
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     app: blog-django-py
     app.kubernetes.io/component: blog-django-py
@@ -10,10 +10,6 @@ metadata:
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
 spec:
-  output:
-    to:
-      kind: ImageStreamTag
-      name: 'blog-django-py:latest'
   resources: {}
   successfulBuildsHistoryLimit: 5
   failedBuildsHistoryLimit: 5
@@ -23,7 +19,9 @@ spec:
       from:
         kind: ImageStreamTag
         namespace: openshift
-        name: 'python:latest'
+        #name: 'python:latest'
+        name: 'python:3.5'
+        #name: 'python:3.6'
       incremental: true
   postCommit: {}
   source:
@@ -40,3 +38,7 @@ spec:
     - type: ConfigChange
     - type: ImageChange
   runPolicy: Serial
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'blog-django-py:latest'

@@ -4,7 +4,7 @@ metadata:
   name: blog-django-py
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     app: blog-django-py
 spec:
@@ -27,7 +27,7 @@ spec:
           - blog-django-py
         from:
           kind: ImageStreamTag
-          namespace: snow
+          namespace: builds-tutorial
           name: 'blog-django-py:latest'
   replicas: 1
   revisionHistoryLimit: 10

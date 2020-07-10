@@ -2,7 +2,7 @@ kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
   name: time
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     build: time
   annotations:

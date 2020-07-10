@@ -5,7 +5,7 @@ metadata:
     openshift.io/generated-by: OpenShiftNewApp
   name: python-ly-app
   #generateName: python-lyapp-
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     app: python-lyapp
 spec:
@@ -28,7 +28,7 @@ spec:
           - python-lyapp
         from:
           kind: ImageStreamTag
-          namespace: snow
+          namespace: builds-tutorial
           name: 'python-lyapp:latest'
         lastTriggeredImage: >-
           docker.io/ably77/python-lyapp@sha256:34224adb5c500a0843ccfbeeb407a1c731418e4352ca0f6cc95eb8d70004ced1

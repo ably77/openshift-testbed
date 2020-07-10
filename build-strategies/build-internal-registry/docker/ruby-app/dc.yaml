@@ -4,7 +4,7 @@ metadata:
   name: docker-build
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     app: docker-build
 spec:
@@ -27,7 +27,7 @@ spec:
           - docker-build
         from:
           kind: ImageStreamTag
-          namespace: snow
+          namespace: builds-tutorial
           name: 'docker-build:latest'
   replicas: 1
   revisionHistoryLimit: 10

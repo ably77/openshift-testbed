@@ -2,7 +2,7 @@ kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
   name: blog-django-py
-  namespace: snow
+  namespace: builds-tutorial
   labels:
     app: blog-django-py
     app.kubernetes.io/component: blog-django-py
