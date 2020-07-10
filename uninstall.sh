@@ -14,10 +14,11 @@ then
 fi
 
 # delete argo apps
-oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-frontend-apps.yaml
-oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-backend-apps.yaml
-oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-operators.yaml
-oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-shared.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-frontend-apps.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-backend-apps.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-operators.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-shared.yaml
+
 
 # Wait for app deletion
 ./extras/wait-for-argo-app-deletion.sh
