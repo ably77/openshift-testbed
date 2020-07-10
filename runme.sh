@@ -17,12 +17,12 @@ oc label node $random_node2 app=jvb
 
 ### deploy shared components in argocd
 echo deploying shared components
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-shared.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-shared.yaml
 sleep 5
 
 ### deploy operators in argocd
 echo deploying operators
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-operators.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-operators.yaml
 
 ### check kafka operator deployment status
 echo waiting for kafka deployment to complete
@@ -46,7 +46,7 @@ echo checking grafana deployment status before deploying applications
 
 ### deploy backend services in argocd
 echo deploying backend app services
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-backend-apps.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-backend-apps.yaml
 
 ### check kafka deployment status
 echo waiting for kafka deployment to complete
@@ -63,7 +63,7 @@ open https://${grafana_route}
 
 ### deploy frontend apps in argocd
 echo deploying frontend apps
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-frontend-apps.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-frontend-apps.yaml
 
 ### Wait for IoT Demo
 ./extras/waitfor-pod -t 10 consumer-app
