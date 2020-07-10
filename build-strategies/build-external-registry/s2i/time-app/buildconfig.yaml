@@ -1,0 +1,45 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: time
+  namespace: snow
+  labels:
+    build: time
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+spec:
+  #nodeSelector: null
+  output:
+    to:
+      kind: DockerImage
+      name: 'docker.io/ably77/python-lyapp:latest'
+    pushSecret:
+      name: dockerhub
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Source
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: 'busybox:latest'
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/VeerMuchandi/time'
+    contextDir: busybox
+  triggers:
+    - type: GitHub
+      github:
+        secret: lkepyXalf8ysZBmt52Kh
+    - type: Generic
+      generic:
+        secret: cieD19AhyWc5RCN-PDt3
+    - type: ConfigChange
+    - type: ImageChange
+      imageChange:
+        lastTriggeredImageID: >-
+          busybox@sha256:a7766145a775d39e53a713c75b6fd6d318740e70327aaa3ed5d09e0ef33fc3df
+  runPolicy: Serial

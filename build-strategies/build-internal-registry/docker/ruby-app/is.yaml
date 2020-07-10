@@ -1,0 +1,12 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: docker-build
+  namespace: snow
+  labels:
+    app: docker-build
+spec:
+  lookupPolicy:
+    local: false

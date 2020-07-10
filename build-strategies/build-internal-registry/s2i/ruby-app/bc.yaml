@@ -1,0 +1,30 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: ruby-s2i-build
+  namespace: snow
+  labels:
+    buildtype: s2i
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'ruby-s2i:latest'
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/openshift/ruby-ex.git'
+    type: Git
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'ruby:2.4'
+        namespace: openshift
+      incremental: true
+      env: []
+  triggers:
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange

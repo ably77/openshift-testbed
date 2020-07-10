@@ -1,0 +1,52 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: docker-build
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  namespace: snow
+  labels:
+    app: docker-build
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - docker-build
+        from:
+          kind: ImageStreamTag
+          namespace: snow
+          name: 'docker-build:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: docker-build
+    deploymentconfig: docker-build
+  template:
+    metadata:
+      labels:
+        app: docker-build
+        deploymentconfig: docker-build
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: docker-build
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30

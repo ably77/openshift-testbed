@@ -1,0 +1,13 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: ruby-s2i
+  namespace: snow
+  labels:
+    app: ruby-s2i
+    buildtype: s2i
+spec:
+  lookupPolicy:
+    local: false

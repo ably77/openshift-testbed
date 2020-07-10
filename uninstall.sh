@@ -13,24 +13,11 @@ then
         exit 1
 fi
 
-# Removing Argo/IoT demo from dr cluster (if it exists)
-#./multi-cluster/dr/dr_uninstall.sh
-
-# Removing Argo/IoT demo from eu cluster (if it exists)
-#./multi-cluster/eu/eu_uninstall.sh
-
-# Removing Argo/IoT demo from azure cluster (if it exists)
-#./multi-cluster/azure/azure_uninstall.sh
-
-# Removing Argo/IoT demo from azure cluster (if it exists)
-#./multi-cluster/gcp/gcp_uninstall.sh
-
 # delete argo apps
-oc delete -f argocd/apps/frontend/
-oc delete -f argocd/apps/backend/
-oc delete -f argocd/apps/operators/
-oc delete -f argocd/apps/shared/
-oc delete -f argocd/apps/testing/
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-frontend-apps.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-backend-apps.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-operators.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-shared.yaml
 
 # Wait for app deletion
 ./extras/wait-for-argo-app-deletion.sh
