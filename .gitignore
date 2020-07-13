@@ -6,3 +6,4 @@ tekton/taxi-go/github-webhooks/wh-webhook-secret.yaml
 build-strategies/build-external-registry/docker-secret.sh
 tekton/springboot-tekton/github-webhooks/wh-webhook-secret.yaml
 tekton/springboot-tekton/github-webhooks/wh-webhook-secret.yaml
+tekton/springboot-tekton/github-webhooks/wh-webhook-secret.yaml
