@@ -1,0 +1,14 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: airline-predictions-stream
+  namespace: builds-tutorial
+  labels:
+    app: airline-predictions-stream
+    app.kubernetes.io/component: airline-predictions-stream
+    app.kubernetes.io/instance: airline-predictions-stream
+spec:
+  lookupPolicy:
+    local: false

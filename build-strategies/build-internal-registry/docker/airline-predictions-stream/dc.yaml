@@ -1,0 +1,52 @@
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: airline-predictions-stream
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  namespace: builds-tutorial
+  labels:
+    app: airline-predictions-stream
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - airline-predictions-stream
+        from:
+          kind: ImageStreamTag
+          namespace: builds-tutorial
+          name: 'airline-predictions-stream:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: airline-predictions-stream
+    deploymentconfig: airline-predictions-stream
+  template:
+    metadata:
+      labels:
+        app: airline-predictions-stream
+        deploymentconfig: airline-predictions-stream
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: airline-predictions-stream
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
