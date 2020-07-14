@@ -1,0 +1,607 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: airlineprediction-sa
+secrets:
+- name: airlineprediction-regcred
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+ name: tekton-triggers-openshift-demo
+rules:
+- apiGroups: ["tekton.dev"]
+  resources: ["eventlisteners", "triggerbindings", "triggertemplates", "tasks", "taskruns"]
+  verbs: ["get"]
+- apiGroups: ["tekton.dev"]
+  resources: ["pipelineruns", "pipelineresources", "taskruns"]
+  verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: tekton-triggers-openshift-binding
+subjects:
+- kind: ServiceAccount
+  name: airlineprediction-sa
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: tekton-triggers-openshift-demo
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: buildah-task
+spec:
+  inputs:
+    params:
+    - name: BUILDER_IMAGE
+      description: The location of the buildah builder image.
+      default: quay.io/buildah/stable:v1.11.3
+      type: string
+    - name: DOCKERFILE
+      description: Path to the Dockerfile to build.
+      default: ./Dockerfile
+      type: string
+    - name: TLSVERIFY
+      description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
+      default: "true"
+      type: string
+    resources:
+    - name: source
+      type: git
+  outputs:
+    resources:
+    - name: image
+      type: image
+  steps:
+  - name: build
+    image: $(inputs.params.BUILDER_IMAGE)
+    workingDir: /workspace/source
+    command: ['buildah', 'bud', '--tls-verify=$(inputs.params.TLSVERIFY)', '--layers', '-f', '$(inputs.params.DOCKERFILE)', '-t', '$(outputs.resources.image.url)', '.']
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+  - name: push
+    image: $(inputs.params.BUILDER_IMAGE)
+    workingDir: /workspace/source
+    command: ['buildah', 'push', '--tls-verify=$(inputs.params.TLSVERIFY)', '$(outputs.resources.image.url)', 'docker://$(outputs.resources.image.url)']
+    volumeMounts:
+    - name: varlibcontainers
+      mountPath: /var/lib/containers
+    securityContext:
+      privileged: true
+  volumes:
+  - name: varlibcontainers
+    emptyDir: {}
+---
+
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: create-github-status-task
+spec:
+  inputs:
+    params:
+    - name: REPO
+      description: The repo to publish the status update for e.g. tektoncd/triggers
+      type: string
+    - name: COMMIT_SHA
+      description: The specific commit to report a status for.
+      type: string
+    - name: STATE
+      description: The state to report error, failure, pending, or success.
+      type: string
+    - name: TARGET_URL
+      type: string
+      default: ""
+      description: The target URL to associate with this status.
+    - name: DESCRIPTION
+      type: string
+      description: A short description of the status.
+    - name: CONTEXT
+      type: string
+      description: A string label to differentiate this status from the status of other systems.
+  steps:
+  - name: start-status
+    image: quay.io/kmcdermo/github-tool:latest
+    workingDir: /workspace/source
+    env:
+    - name: GITHUB_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: github-auth
+          key: token
+    command: ["github-tool"]
+    args:
+      - "create-status"
+      - "--repo"
+      - "$(inputs.params.REPO)"
+      - "--sha"
+      - "$(inputs.params.COMMIT_SHA)"
+      - "--state"
+      - "$(inputs.params.STATE)"
+      - "--target-url"
+      - "$(inputs.params.TARGET_URL)"
+      - "--description"
+      - "$(inputs.params.DESCRIPTION)"
+      - "--context"
+      - "$(inputs.params.CONTEXT)"
+
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: deploy-from-source-task
+spec:
+  inputs:
+    resources:
+      - name: source
+        type: git
+    params:
+      - name: PATHTODEPLOYMENT
+        type: string
+        description: Path to the manifest to apply
+        default: deploy
+      - name: NAMESPACE
+        type: string
+        description: Namespace to deploy into
+      - name: DRYRUN
+        type: string
+        description: If true run a server-side dryrun.
+        default: "false"
+  steps:
+    - name: run-kubectl
+      image: quay.io/kmcdermo/k8s-kubectl:latest
+      workingDir: /workspace/source
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "--dry-run=$(inputs.params.DRYRUN)"
+        - "-n"
+        - "$(inputs.params.NAMESPACE)"
+        - "-k"
+        - "$(inputs.params.PATHTODEPLOYMENT)"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: deploy-using-kubectl-task
+spec:
+  inputs:
+    resources:
+      - name: source
+        type: git
+      - name: image
+        type: image
+    params:
+      - name: PATHTODEPLOYMENT
+        type: string
+        description: Path to the manifest to apply
+        default: deploy
+      - name: NAMESPACE
+        type: string
+        description: Namespace to deploy into
+      - name: DRYRUN
+        type: string
+        description: If true run a server-side dryrun.
+        default: "false"
+      - name: YAMLPATHTOIMAGE
+        type: string
+        description:
+          The path to the image to replace in the yaml manifest (arg to yq)
+  steps:
+    - name: replace-image
+      image: mikefarah/yq
+      workingDir: /workspace/source
+      command: ["yq"]
+      args:
+        - "w"
+        - "-i"
+        - "$(inputs.params.PATHTODEPLOYMENT)/deployment.yaml"
+        - "$(inputs.params.YAMLPATHTOIMAGE)"
+        - "$(inputs.resources.image.url)"
+    - name: run-kubectl
+      image: quay.io/kmcdermo/k8s-kubectl:latest
+      workingDir: /workspace/source
+      command: ["kubectl"]
+      args:
+        - "apply"
+        - "--dry-run=$(inputs.params.DRYRUN)"
+        - "-n"
+        - "$(inputs.params.NAMESPACE)"
+        - "-k"
+        - "$(inputs.params.PATHTODEPLOYMENT)"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: dev-cd-deploy-from-master-binding
+spec:
+  params:
+  - name: gitref
+    value: $(body.head_commit.id)
+  - name: gitrepositoryurl
+    value: $(body.repository.clone_url)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: dev-cd-deploy-from-master-template
+spec:
+  params:
+  - name: gitref
+    description: The git revision
+    default: master
+  - name: gitrepositoryurl
+    description: The git repository url
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineRun
+    metadata:
+      name: dev-cd-pipeline-run-$(uid)
+    spec:
+      serviceAccountName: airlineprediction-sa
+      pipelineRef:
+        name: dev-cd-pipeline
+      resources:
+        - name: source-repo
+          resourceSpec:
+            type: git
+            params:
+            - name: revision
+              value: $(params.gitref)
+            - name: url
+              value: $(params.gitrepositoryurl)
+        - name: runtime-image
+          resourceSpec:
+            type: image
+            params:
+              - name: url
+                value: quay.io/$QUAY_USERNAME/airlineprediction-stream:$(params.gitref)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: dev-ci-build-from-pr-binding
+spec:
+  params:
+  - name: gitref
+    value: $(body.pull_request.head.ref)
+  - name: gitsha
+    value: $(body.pull_request.head.sha)
+  - name: gitrepositoryurl
+    value: $(body.repository.clone_url)
+  - name: fullname
+    value: $(body.repository.full_name)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: dev-ci-build-from-pr-template
+spec:
+  params:
+  - name: gitref
+    description: The git branch for this PR
+  - name: gitsha
+    description: the specific commit SHA.
+  - name: gitrepositoryurl
+    description: The git repository url
+  - name: fullname
+    description: The GitHub repository for this PullRequest.
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineRun
+    metadata:
+      name: dev-ci-pipeline-run-$(uid)
+    spec:
+      serviceAccountName: airlineprediction-sa
+      pipelineRef:
+        name: dev-ci-pipeline
+      params:
+      - name: REPO
+        value: $(params.fullname)
+      - name: COMMIT_SHA
+        value: $(params.gitsha)
+      resources:
+        - name: source-repo
+          resourceSpec:
+            type: git
+            params:
+            - name: revision
+              value: $(params.gitref)
+            - name: url
+              value: $(params.gitrepositoryurl)
+        - name: runtime-image
+          resourceSpec:
+            type: image
+            params:
+              - name: url
+                value: quay.io/$QUAY_USERNAME/airlineprediction-stream:$(params.gitref)-$(params.gitsha)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: stage-cd-deploy-from-push-binding
+spec:
+  params:
+  - name: gitref
+    value: $(body.ref)
+  - name: gitsha
+    value: $(body.commits.0.id)
+  - name: gitrepositoryurl
+    value: $(body.repository.clone_url)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: stage-cd-deploy-from-push-template
+spec:
+  params:
+  - name: gitref
+    description: The git revision
+    default: master
+  - name: gitrepositoryurl
+    description: The git repository url
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineRun
+    metadata:
+      name: stage-cd-pipeline-run-$(uid)
+    spec:
+      serviceAccountName: airlineprediction-sa
+      pipelineRef:
+        name: stage-cd-pipeline
+      resources:
+        - name: source-repo
+          resourceSpec:
+            type: git
+            params:
+            - name: revision
+              value: $(params.gitref)
+            - name: url
+              value: $(params.gitrepositoryurl)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: stage-ci-dryrun-from-pr-binding
+spec:
+  params:
+  - name: gitref
+    value: $(body.pull_request.head.ref)
+  - name: gitrepositoryurl
+    value: $(body.repository.clone_url)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: stage-ci-dryrun-from-pr-template
+spec:
+  params:
+  - name: gitref
+    description: The git revision
+    default: master
+  - name: gitrepositoryurl
+    description: The git repository url
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1alpha1
+    kind: PipelineRun
+    metadata:
+      name: stage-ci-pipeline-run-$(uid)
+    spec:
+      serviceAccountName: airlineprediction-sa
+      pipelineRef:
+        name: stage-ci-pipeline
+      resources:
+        - name: source-repo
+          resourceSpec:
+            type: git
+            params:
+            - name: revision
+              value: $(params.gitref)
+            - name: url
+              value: $(params.gitrepositoryurl)
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: dev-ci-pipeline
+spec:
+  resources:
+    - name: source-repo
+      type: git
+    - name: runtime-image
+      type: image
+  params:
+    - name: REPO
+      type: string
+    - name: COMMIT_SHA
+      type: string
+  tasks:
+    - name: create-pending-status
+      taskRef:
+        name: create-github-status-task
+      params:
+      - name: REPO
+        value: $(params.REPO)
+      - name: COMMIT_SHA
+        value: $(params.COMMIT_SHA)
+      - name: STATE
+        value: "pending"
+      - name: DESCRIPTION
+        value: "Starting dev-ci-pipeline"
+      - name: CONTEXT
+        value: "dev-ci-pipeline"
+    - name: build-image
+      taskRef:
+        name: buildah-task
+      runAfter:
+        - create-pending-status
+      resources:
+        inputs:
+          - name: source
+            resource: source-repo
+        outputs:
+          - name: image
+            resource: runtime-image
+    - name: create-success-status
+      taskRef:
+        name: create-github-status-task
+      runAfter:
+        - build-image
+      params:
+      - name: REPO
+        value: $(params.REPO)
+      - name: COMMIT_SHA
+        value: $(params.COMMIT_SHA)
+      - name: STATE
+        value: "success"
+      - name: DESCRIPTION
+        value: "Completed dev-ci-pipeline"
+      - name: CONTEXT
+        value: "dev-ci-pipeline"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: stage-ci-pipeline
+spec:
+  resources:
+    - name: source-repo
+      type: git
+  tasks:
+    - name: apply-source
+      taskRef:
+        name: deploy-from-source-task
+      resources:
+        inputs:
+          - name: source
+            resource: source-repo
+      params:
+      - name: NAMESPACE
+        value: airlineprediction-stream-staging
+      - name: DRYRUN
+        value: "true"
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: dev-cd-pipeline
+spec:
+  resources:
+    - name: source-repo
+      type: git
+    - name: runtime-image
+      type: image
+  tasks:
+    - name: build-image
+      taskRef:
+        name: buildah-task
+      resources:
+        inputs:
+          - name: source
+            resource: source-repo
+        outputs:
+          - name: image
+            resource: runtime-image
+    - name: deploy-image
+      runAfter:
+        - build-image
+      taskRef:
+        name: deploy-using-kubectl-task
+      resources:
+        inputs:
+          - name: source
+            resource: source-repo
+          - name: image
+            resource: runtime-image
+      params:
+      - name: PATHTODEPLOYMENT
+        value: $DEPLOYMENT_PATH
+      - name: YAMLPATHTOIMAGE
+        value: "spec.template.spec.containers[0].image"
+      - name: NAMESPACE
+        value: airlineprediction-stream-dev
+---
+apiVersion: tekton.dev/v1alpha1
+kind: Pipeline
+metadata:
+  name: stage-cd-pipeline
+spec:
+  resources:
+    - name: source-repo
+      type: git
+  tasks:
+    - name: apply-source
+      taskRef:
+        name: deploy-from-source-task
+      resources:
+        inputs:
+          - name: source
+            resource: source-repo
+      params:
+      - name: NAMESPACE
+        value: airlineprediction-stream-staging
+---
+apiVersion: tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: cicd-event-listener
+spec:
+  serviceAccountName: airlineprediction-sa
+  triggers:
+    - name: dev-ci-build-from-pr
+      interceptors:
+        - cel:
+            filter: (header.match("X-GitHub-Event", "pull_request") && body.action == "opened" || body.action == "synchronize") && body.pull_request.head.repo.full_name == "$GITHUB_USERNAME/airlineprediction-stream"
+      bindings:
+        - name: dev-ci-build-from-pr-binding
+      template:
+        name: dev-ci-build-from-pr-template
+    - name: dev-cd-deploy-from-master
+      interceptors:
+        - cel:
+            filter: (header.match("X-GitHub-Event", "push") && body.repository.full_name == "$GITHUB_USERNAME/airlineprediction-stream") && body.ref.startsWith("refs/heads/master")
+      bindings:
+        - name: dev-cd-deploy-from-master-binding
+      template:
+        name: dev-cd-deploy-from-master-template
+    - name: stage-ci-dryrun-from-pr
+      interceptors:
+        - cel:
+            filter: (header.match("X-GitHub-Event", "pull_request") && body.action == "opened" || body.action == "synchronize") && body.pull_request.head.repo.full_name == "$GITHUB_USERNAME/airlineprediction-stream-stage-config"
+      bindings:
+        - name: stage-ci-dryrun-from-pr-binding
+      template:
+        name: stage-ci-dryrun-from-pr-template
+    - name: stage-cd-deploy-from-push
+      interceptors:
+        - cel:
+            filter: (header.match("X-GitHub-Event", "push") && body.repository.full_name == "$GITHUB_USERNAME/airlineprediction-stream-stage-config") && body.ref.startsWith("refs/heads/master")
+      bindings:
+        - name: stage-cd-deploy-from-push-binding
+      template:
+        name: stage-cd-deploy-from-push-template
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: webhook
+  labels:
+    app.kubernetes.io/managed-by: EventListener
+    app.kubernetes.io/part-of: Triggers
+    eventlistener: cicd-event-listener
+spec:
+  to:
+    kind: Service
+    name: el-cicd-event-listener
+    weight: 100
+  port:
+    targetPort: 8080
+  wildcardPolicy: None
+---
