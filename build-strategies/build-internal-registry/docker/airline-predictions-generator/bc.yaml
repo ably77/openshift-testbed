@@ -1,0 +1,47 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: airline-predictions-generator
+  namespace: builds-tutorial
+  labels:
+    app: airline-predictions-generator
+    app.kubernetes.io/component: airline-predictions-generator
+    app.kubernetes.io/instance: airline-predictions-generator
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'airline-predictions-generator:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    # option to replace Dockerfile FROM image with ImageStreamTag image
+    #dockerStrategy:
+    #  from:
+    #    kind: ImageStreamTag
+    #    name: 'python:latest'
+    #    namespace: openshift
+    # option to replace Dockerfile FROM image with another specified image
+    #dockerStrategy:
+    #  from:
+    #    kind: DockerImage
+    #    name: openjdk:8-jre
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/ably77/airlineprediction-generator'
+  triggers:
+    - type: GitHub
+      github:
+        secret: H5yQIfcBCx8VngIGRFWF
+    - type: Generic
+      generic:
+        secret: diHWHFwkdgFnKARLPuc3
+    - type: ConfigChange
+    - type: ImageChange
+  runPolicy: Serial
