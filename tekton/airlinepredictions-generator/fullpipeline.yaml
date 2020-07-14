@@ -3,7 +3,7 @@ kind: ServiceAccount
 metadata:
   name: airlineprediction-sa
 secrets:
-- name: airlineprediction-regcred
+- name: airlineprediction-generator-regcred
 
 ---
 kind: Role
