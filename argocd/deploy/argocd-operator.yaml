@@ -100,6 +100,32 @@ subjects:
   name: argocd-server
   namespace: argocd
 ---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argocd-redis-ha-haproxy-cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: argocd-redis-ha-haproxy
+    namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: argocd-redis-ha-cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: argocd-redis-ha
+    namespace: argocd
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
