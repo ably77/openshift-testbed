@@ -1,0 +1,12 @@
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: oc-client
+  namespace: default
+  labels:
+    app: oc-client
+spec:
+  lookupPolicy:
+    local: true

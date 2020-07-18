@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: orgin-cli
+spec:
+  ttlSecondsAfterFinished: 10
+  parallelism: 1
+  completions: 1
+  template:
+    metadata:
+      labels:
+        job-name: orgin-cli
+    spec:
+      containers:
+      - name: orgin-cli
+        image: image-registry.openshift-image-registry.svc:5000/default/oc-client
+        imagePullPolicy: Always
+        #resources:
+          #requests:
+            #memory: "500Mi"
+            #cpu: "250m"
+          #limits:
+            #memory: "500Mi"
+            #cpu: "250m"
+        command:
+          - /bin/bash
+          - -x
+          - -c
+          - |           
+            oc whoami
+            git clone https://github.com/ably77/openshift-testbed.git
+            cd openshift-testbed
+            ./runme.sh
+      restartPolicy: Never
+  backoffLimit: 5

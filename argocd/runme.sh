@@ -36,7 +36,3 @@ oc create -f argocd/deploy/main-project.yaml
 
 # add argocd repos
 ./argocd/deploy/add_repos.sh
-
-### Open argocd route
-argocd_route=$(oc get routes --all-namespaces | grep argocd-server-argocd.apps. | awk '{ print $3 }')
-open http://${argocd_route}
