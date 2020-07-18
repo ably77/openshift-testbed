@@ -84,9 +84,26 @@ Lab instructions have been created to help walk you through the capabilities of 
 
 ## Running this Demo
 
+### Running and automated build
+This is able to build and deploy itself using Openshift Build strategies.
+```
+oc create -f build-strategies/build-internal-registry/docker/openshift-testbed-installer
+```
+
+What this will do:
+- Create a BuildConfig that points to a git repo (https://github.com/ably77/oc-client)
+- Builds oc-client image including demo dependencies
+- Deploys built image and installs openshift-testbed
+
+Once the install is complete, run the script below to open demo routes on your local machine
+```
+./scripts/open-routes.sh
+```
+
+### Running the demo manually
 If you have an Openshift cluster up, `argocd` CLI installed, and are authenticated to the `oc` CLI just run the installation script below. The script itself has more commented information on the steps and commands if you prefer to run through this demo manually.
 ```
-./runme.sh
+./scripts/runme.sh
 ```
 
 This script will:
