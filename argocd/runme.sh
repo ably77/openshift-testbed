@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./vars.txt
+
 ### Check if argocd CLI is installed
 ARGOCLI=$(which argocd)
 echo checking if argocd CLI is installed
@@ -34,5 +36,11 @@ sleep 45
 # Add argocd main project
 oc create -f argocd/deploy/main-project.yaml
 
-# add argocd repos
-./argocd/deploy/add_repos.sh
+# Login with the current admin password
+argocd_server_password=$(oc get secret -n argocd argocd-cluster -o jsonpath='{.data.admin\.password}' | base64 -d)
+argocd_route=$(oc get routes --all-namespaces | grep argocd-server-argocd.apps. | awk '{ print $3 }')
+
+argocd --insecure --grpc-web login ${argocd_route}:443 --username admin --password ${argocd_server_password}
+
+# Add repo to be managed to argo repositories
+argocd repo add ${repo1_url}

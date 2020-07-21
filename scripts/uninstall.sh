@@ -39,10 +39,10 @@ oc delete project argocd
 oc project default
 
 # delete CRDs
-oc delete -f extras/crds/
 oc delete crd checlusters.org.eclipse.che
 oc delete crd grafanadashboards.integreatly.org grafanadatasources.integreatly.org grafanas.integreatly.org
 oc delete crd podia.podium.com
 oc delete crd kafkabridges.kafka.strimzi.io kafkaconnectors.kafka.strimzi.io kafkaconnects.kafka.strimzi.io kafkaconnects2is.kafka.strimzi.io kafkamirrormaker2s.kafka.strimzi.io kafkamirrormakers.kafka.strimzi.iokafkarebalances.kafka.strimzi.io kafkarebalances.kafka.strimzi.io kafkas.kafka.strimzi.io kafkatopics.kafka.strimzi.io kafkausers.kafka.strimzi.io
 oc delete crd config.operator.tekton.dev
+oc delete crd activemqartemisaddresses.broker.amq.io activemqartemises.broker.amq.io activemqartemisscaledowns.broker.amq.io
 oc delete crd applications.argoproj.io appprojects.argoproj.io argocdexports.argoproj.io argocds.argoproj.io

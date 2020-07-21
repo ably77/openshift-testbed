@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#### Create artemis CRDs
-oc create -f extras/crds/
+source ./vars.txt
 
 # run argocd install script
 ./argocd/runme.sh

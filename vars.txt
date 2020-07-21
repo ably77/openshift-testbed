@@ -1,0 +1,2 @@
+# openshift-testbed-apps repo
+repo1_url="https://github.com/ably77/openshift-testbed-apps"
