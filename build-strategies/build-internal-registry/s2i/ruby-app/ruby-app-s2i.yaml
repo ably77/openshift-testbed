@@ -1,0 +1,100 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: ruby-s2i-build
+  namespace: builds-tutorial
+  labels:
+    buildtype: s2i
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'ruby-s2i:latest'
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/openshift/ruby-ex.git'
+    type: Git
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        #name: 'ruby:2.3'
+        #name: 'ruby:2.4'
+        name: 'ruby:2.5'
+        namespace: openshift
+      incremental: true
+      env: []
+  triggers:
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: ruby-s2i
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  namespace: builds-tutorial
+  labels:
+    app: ruby-s2i
+    buildtype: s2i
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - ruby-s2i
+        from:
+          kind: ImageStreamTag
+          namespace: builds-tutorial
+          name: 'ruby-s2i:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: ruby-s2i
+    deploymentconfig: ruby-s2i
+  template:
+    metadata:
+      labels:
+        app: ruby-s2i
+        deploymentconfig: ruby-s2i
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: ruby-s2i
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: ruby-s2i
+  namespace: builds-tutorial
+  labels:
+    app: ruby-s2i
+    buildtype: s2i
+spec:
+  lookupPolicy:
+    local: false

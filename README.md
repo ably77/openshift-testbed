@@ -87,7 +87,7 @@ Lab instructions have been created to help walk you through the capabilities of 
 ### Running and automated build
 This is able to build and deploy itself using Openshift Build strategies.
 ```
-oc create -f build-strategies/build-internal-registry/docker/openshift-testbed-installer
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/openshift-testbed-installer.yaml
 ```
 
 What this will do:

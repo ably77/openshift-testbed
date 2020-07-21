@@ -1,0 +1,99 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: docker-build
+  namespace: builds-tutorial
+  labels:
+    name: docker-build
+spec:
+  triggers:
+    - type: GitHub
+      github:
+        secret: secret101
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/openshift/ruby-hello-world.git'
+  strategy:
+    type: Docker
+    #dockerStrategy:
+    #  from:
+    #    kind: ImageStreamTag
+    #    name: 'ruby:2.5'
+    #    namespace: openshift
+    #  env:
+    #    - name: EXAMPLE
+    #      value: sample-app
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'docker-build:latest'
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: docker-build
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  namespace: builds-tutorial
+  labels:
+    app: docker-build
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - docker-build
+        from:
+          kind: ImageStreamTag
+          namespace: builds-tutorial
+          name: 'docker-build:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: docker-build
+    deploymentconfig: docker-build
+  template:
+    metadata:
+      labels:
+        app: docker-build
+        deploymentconfig: docker-build
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: docker-build
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: docker-build
+  namespace: builds-tutorial
+  labels:
+    app: docker-build
+spec:
+  lookupPolicy:
+    local: false

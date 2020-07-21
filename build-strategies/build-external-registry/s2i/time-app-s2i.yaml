@@ -1,0 +1,132 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: time
+  namespace: builds-tutorial
+  labels:
+    build: time
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+spec:
+  #nodeSelector: null
+  output:
+    to:
+      kind: DockerImage
+      name: 'docker.io/ably77/python-lyapp:latest'
+    pushSecret:
+      name: dockerhub
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Source
+    dockerStrategy:
+      from:
+        kind: DockerImage
+        name: 'busybox:latest'
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/VeerMuchandi/time'
+    contextDir: busybox
+  triggers:
+    - type: GitHub
+      github:
+        secret: lkepyXalf8ysZBmt52Kh
+    - type: Generic
+      generic:
+        secret: cieD19AhyWc5RCN-PDt3
+    - type: ConfigChange
+    - type: ImageChange
+      imageChange:
+        lastTriggeredImageID: >-
+          busybox@sha256:a7766145a775d39e53a713c75b6fd6d318740e70327aaa3ed5d09e0ef33fc3df
+  runPolicy: Serial
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: python-ly-app
+  #generateName: python-lyapp-
+  namespace: builds-tutorial
+  labels:
+    app: python-lyapp
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - python-lyapp
+        from:
+          kind: ImageStreamTag
+          namespace: builds-tutorial
+          name: 'python-lyapp:latest'
+        lastTriggeredImage: >-
+          docker.io/ably77/python-lyapp@sha256:34224adb5c500a0843ccfbeeb407a1c731418e4352ca0f6cc95eb8d70004ced1
+  replicas: 1
+  revisionHistoryLimit: 10
+  test: false
+  selector:
+    app: python-lyapp
+    deploymentconfig: python-lyapp
+  template:
+    metadata:
+      labels:
+        app: python-lyapp
+        deploymentconfig: python-lyapp
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: python-lyapp
+          image: >-
+            docker.io/ably77/python-lyapp@sha256:34224adb5c500a0843ccfbeeb407a1c731418e4352ca0f6cc95eb8d70004ced1
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  name: python-lyapp
+  namespace: builds-tutorial
+  generation: 1
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+    - name: latest
+      #annotations: null
+      from:
+        kind: DockerImage
+        name: 'docker.io/ably77/python-lyapp:latest'
+      generation: 1
+      importPolicy:
+        scheduled: true
+        insecure: true
+      referencePolicy:
+        type: Source

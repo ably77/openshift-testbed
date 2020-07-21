@@ -1,0 +1,112 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: blog-django-py
+  namespace: builds-tutorial
+  labels:
+    app: blog-django-py
+    app.kubernetes.io/component: blog-django-py
+    app.kubernetes.io/instance: blog-django-py
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+spec:
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        #name: 'python:latest'
+        name: 'python:3.5'
+        #name: 'python:3.6'
+      incremental: true
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/openshift-katacoda/blog-django-py'
+  triggers:
+    - type: GitHub
+      github:
+        secret: H5yQIfcBCx8VngIGRFWF
+    - type: Generic
+      generic:
+        secret: diHWHFwkdgFnKARLPuc3
+    - type: ConfigChange
+    - type: ImageChange
+  runPolicy: Serial
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'blog-django-py:latest'
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: blog-django-py
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  namespace: builds-tutorial
+  labels:
+    app: blog-django-py
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - blog-django-py
+        from:
+          kind: ImageStreamTag
+          namespace: builds-tutorial
+          name: 'blog-django-py:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: blog-django-py
+    deploymentconfig: blog-django-py
+  template:
+    metadata:
+      labels:
+        app: blog-django-py
+        deploymentconfig: blog-django-py
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: blog-django-py
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: blog-django-py
+  namespace: builds-tutorial
+  labels:
+    app: blog-django-py
+    app.kubernetes.io/component: blog-django-py
+    app.kubernetes.io/instance: blog-django-py
+spec:
+  lookupPolicy:
+    local: false
