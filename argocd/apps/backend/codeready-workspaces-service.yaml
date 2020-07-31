@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: codeready-workspaces/cr
+    path: kustomize/instances/overlays/backend/codeready-workspaces-service
   destination:
     server: https://kubernetes.default.svc
     namespace: codeready

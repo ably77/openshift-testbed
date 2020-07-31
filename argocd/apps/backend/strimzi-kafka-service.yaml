@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: strimzi-kafka/cr/ha-ephemeral
+    path: kustomize/instances/overlays/backend/strimzi-kafka-service
   destination:
     server: https://kubernetes.default.svc
     namespace: myproject

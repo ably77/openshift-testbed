@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: testing/amq-broker/cr
+    path: kustomize/instances/overlays/backend/amq-broker-service
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-quickstart-messaging
