@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: iotdemo-app
+    path: kustomize/instances/overlays/frontend/iotdemo-app
   destination:
     server: https://kubernetes.default.svc
     namespace: iotdemo-app
