@@ -11,11 +11,6 @@ random_node2=$(oc get nodes | grep worker | awk 'NR==2{ print $1 }')
 oc label node $random_node1 app=jvb
 oc label node $random_node2 app=jvb
 
-### deploy shared components in argocd
-#echo deploying shared components
-#oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-shared.yaml
-#sleep 5
-
 ### deploy operators in argocd
 echo deploying operators
 oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-operators.yaml
