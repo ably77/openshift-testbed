@@ -1,0 +1,7 @@
+apiVersion: "autoscaling.openshift.io/v1beta1"
+kind: "MachineAutoscaler"
+metadata:
+  name: machine-autoscaler
+spec:
+  minReplicas: 1
+  maxReplicas: 10

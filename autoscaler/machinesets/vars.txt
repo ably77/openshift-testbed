@@ -1,0 +1,16 @@
+# name of your machineset
+MACHINESET_NAME="demo-machineset"
+
+# roles of your machine set 
+ROLE="worker"
+SECOND_ROLE="stateful"
+
+# region and zone to deploy workers in
+REGION="us-west-1"
+ZONE="b"
+
+# instance type to deploy
+INSTANCE_TYPE="m5.xlarge"
+
+# desired number of workers
+DESIRED_REPLICAS="1"
