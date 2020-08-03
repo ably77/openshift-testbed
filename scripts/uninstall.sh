@@ -14,7 +14,7 @@ then
 fi
 
 # delete argo apps
-oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-frontend-apps.yaml
+oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-dev-apps.yaml
 oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-backend-apps.yaml
 oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-operators.yaml
 
