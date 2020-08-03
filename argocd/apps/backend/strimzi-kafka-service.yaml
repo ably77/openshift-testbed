@@ -13,7 +13,7 @@ spec:
     path: kustomize/instances/overlays/backend/strimzi-kafka-service
   destination:
     server: https://kubernetes.default.svc
-    namespace: myproject
+    namespace: myproject-dev
   syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).

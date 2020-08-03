@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: kustomize/instances/overlays/operators/myproject-operators
+    path: kustomize/instances/overlays/operators/namespaced-operators/myproject-dev-operators
   destination:
     server: https://kubernetes.default.svc
-    namespace: myproject
+    namespace: myproject-dev
   syncPolicy:
     automated:
       prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).

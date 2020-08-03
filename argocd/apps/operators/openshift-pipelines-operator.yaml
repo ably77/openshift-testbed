@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: HEAD
-    path: kustomize/instances/overlays/operators/openshift-pipelines-operator
+    path: kustomize/instances/overlays/operators/cluster-wide-operators/openshift-pipelines-operator
   destination:
     server: https://kubernetes.default.svc
     namespace: pipelines-tutorial
