@@ -49,7 +49,7 @@ echo checking grafana deployment status before deploying applications
 
 ### deploy frontend apps in argocd
 echo deploying frontend apps
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-frontend-apps.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-dev-apps.yaml
 
 ### Wait for IoT Demo
 ./extras/waitfor-pod -t 10 consumer-app
