@@ -35,7 +35,9 @@ spec:
   source:
     type: Git
     git:
-      uri: 'https://github.com/ably77/airlineprediction-stream'
+      uri: 'https://github.com/ably77/kafka-streams-machine-learning-examples'
+      ref: 'master'
+    contextDir: '/h2o-gbm'
   triggers:
     - type: GitHub
       github:
