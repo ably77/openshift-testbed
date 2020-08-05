@@ -4,7 +4,7 @@ metadata:
   name: argocd
   namespace: argocd
   labels:
-    example: route
+    app: argocd
 spec:
   dex:
     image: quay.io/redhat-cop/dex 
@@ -15,6 +15,7 @@ spec:
     defaultPolicy: 'role:admin'
     policy: |
       g, system:cluster-admins, role:admin
+      g, admins, role:admin
     scopes: '[groups]'
   grafana:
     enabled: false
@@ -27,3 +28,7 @@ spec:
   server:
     route:
       enabled: true
+  initialRepositories: |
+    - name: openshift-testbed-apps
+      type: git
+      url: https://github.com/ably77/openshift-testbed-apps
