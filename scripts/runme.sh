@@ -3,7 +3,7 @@
 source ./vars.txt
 
 # run argocd install script
-./argocd/runme.sh
+./argocd/install.sh
 
 # label node for jitsi video
 random_node1=$(oc get nodes | grep worker | awk 'NR==1{ print $1 }')
