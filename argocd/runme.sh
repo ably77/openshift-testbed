@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ./vars.txt
-
 ### Check if argocd CLI is installed
 ARGOCLI=$(which argocd)
 echo checking if argocd CLI is installed
@@ -18,13 +16,13 @@ fi
 echo now deploying argoCD
 
 # create argocd operator
-oc create -f argocd/deploy/argocd-operator.yaml
+oc apply -k argocd/deploy/operator/
 
 # wait for operator deployment
 ./extras/waitfor-pod -n argocd -t 10 argocd-operator
 
 # create argocd cluster
-oc create -f argocd/deploy/argocd-cluster.yaml
+oc apply -k argocd/deploy/cr
 
 # wait for cluster deployment
 ./extras/waitfor-pod -n argocd -t 10 argocd-application-controller
@@ -32,9 +30,6 @@ oc create -f argocd/deploy/argocd-cluster.yaml
 # sleep for 45 seconds
 echo "sleeping for 45 seconds for argocd to finish installing"
 sleep 45
-
-# Add argocd main project
-oc create -f argocd/deploy/main-project.yaml
 
 # Login with the current admin password
 argocd_server_password=$(oc get secret -n argocd argocd-cluster -o jsonpath='{.data.admin\.password}' | base64 -d)
