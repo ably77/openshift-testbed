@@ -5,3 +5,4 @@ kind: Kustomization
 # list of Resource Config to be Applied
 resources:
 - argocd-cluster.yaml
+- main-project.yaml

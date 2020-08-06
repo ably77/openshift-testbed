@@ -5,4 +5,3 @@ kind: Kustomization
 # list of Resource Config to be Applied
 resources:
 - argocd-operator.yaml
-- main-project.yaml
