@@ -17,23 +17,23 @@ oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/a
 
 ### check kafka operator deployment status
 echo waiting for kafka deployment to complete
-./extras/waitfor-pod -t 10 strimzi-cluster-operator-v0.18.0
+./scripts/waitfor-pod -t 10 strimzi-cluster-operator-v0.18.0
 
 ### check grafana operator deployment status
 echo checking grafana deployment status before deploying applications
-./extras/waitfor-pod -t 10 grafana-operator
+./scripts/waitfor-pod -t 10 grafana-operator
 
 ### check codeready operator deployment status
 echo checking grafana deployment status before deploying applications
-./extras/waitfor-pod -t 10 codeready-operator
+./scripts/waitfor-pod -t 10 codeready-operator
 
 ### check openshift pipelines operator deployment status
 echo checking grafana deployment status before deploying applications
-./extras/waitfor-pod -t 10 openshift-pipelines-operator
+./scripts/waitfor-pod -t 10 openshift-pipelines-operator
 
 ### check podium operator deployment status
 echo checking grafana deployment status before deploying applications
-./extras/waitfor-pod -t 10 podium-operator
+./scripts/waitfor-pod -t 10 podium-operator
 
 ### deploy backend services in argocd
 echo deploying backend app services
@@ -41,24 +41,24 @@ oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/a
 
 ### check kafka deployment status
 echo waiting for kafka deployment to complete
-./extras/waitfor-pod -t 20 my-cluster-kafka-2
+./scripts/waitfor-pod -t 20 my-cluster-kafka-2
 
 ### check grafana deployment status
 echo checking grafana deployment status before deploying applications
-./extras/waitfor-pod -t 10 grafana-deployment
+./scripts/waitfor-pod -t 10 grafana-deployment
 
 ### deploy frontend apps in argocd
 echo deploying frontend apps
 oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-dev-apps.yaml
 
 ### Wait for IoT Demo
-./extras/waitfor-pod -t 10 consumer-app
+./scripts/waitfor-pod -t 10 consumer-app
 
 ### switch to codeready namespace
 oc project codeready
 
 ### wait for codeready workspace to deploy
-./extras/wait-for-rollout.sh deployment codeready codeready
+./scripts/wait-for-rollout.sh deployment codeready codeready 20
 
 ### end
 echo

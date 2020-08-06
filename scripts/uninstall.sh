@@ -18,14 +18,11 @@ oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/a
 oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-backend-apps.yaml
 oc delete -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-operators.yaml
 
-# Wait for app deletion
-./extras/wait-for-argo-app-deletion.sh
-
 # delete argocd cluster
-oc delete -f argocd/deploy/argocd-cluster.yaml
+oc delete -k argocd/deploy/cr
 
-# delete argocd
-oc delete -f argocd/deploy/argocd-operator.yaml
+# delete argocd operator
+oc delete -k argocd/deploy/operator/
 
 # delete CSVs
 oc delete csv -n openshift-operators --all

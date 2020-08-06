@@ -19,20 +19,10 @@ echo now deploying argoCD
 oc apply -k argocd/deploy/operator/
 
 # wait for operator deployment
-./extras/waitfor-pod -n argocd -t 10 argocd-operator
+./scripts/waitfor-pod -n argocd -t 10 argocd-operator
 
 # create argocd cluster
 oc apply -k argocd/deploy/cr
 
-# wait for cluster deployment
-./extras/waitfor-pod -n argocd -t 10 argocd-application-controller
-
-# sleep for 45 seconds
-echo "sleeping for 45 seconds for argocd to finish installing"
-sleep 45
-
-# Login with the current admin password
-argocd_server_password=$(oc get secret -n argocd argocd-cluster -o jsonpath='{.data.admin\.password}' | base64 -d)
-argocd_route=$(oc get routes --all-namespaces | grep argocd-server-argocd.apps. | awk '{ print $3 }')
-
-argocd --insecure --grpc-web login ${argocd_route}:443 --username admin --password ${argocd_server_password}
+# wait for argo cluster rollout
+./scripts/wait-for-rollout.sh deployment argocd-server argocd 10
