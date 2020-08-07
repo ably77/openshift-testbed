@@ -1,0 +1,7 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manuela-line-dashboard
+spec:
+  source:
+    path: kustomize/providers/overlays/azure/dev/manuela/dashboard
