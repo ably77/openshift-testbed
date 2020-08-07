@@ -10,6 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: master
+    #path: kustomize/instances/overlays/dev/manuela/dashboard
     path: kustomize/instances/overlays/dev/manuela/dashboard
   destination:
     server: https://kubernetes.default.svc
