@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ./vars.txt
+platform=$1
 
 # run argocd install script
 ./argocd/install.sh
@@ -17,7 +18,7 @@ oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/a
 
 ### check kafka operator deployment status
 echo waiting for kafka deployment to complete
-./scripts/waitfor-pod -t 10 strimzi-cluster-operator-v0.18.0
+./scripts/waitfor-pod -t 10 strimzi-cluster-operator-v0.19.0
 
 ### check grafana operator deployment status
 echo checking grafana deployment status before deploying applications
@@ -49,7 +50,7 @@ echo checking grafana deployment status before deploying applications
 
 ### deploy frontend apps in argocd
 echo deploying frontend apps
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-dev-apps.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-dev-apps-${platform}.yaml
 
 ### Wait for IoT Demo
 ./scripts/waitfor-pod -t 10 consumer-app
