@@ -4,4 +4,5 @@ metadata:
   name: manuela-line-dashboard
 spec:
   source:
+    repoURL: https://github.com/ably77/openshift-testbed-apps
     path: kustomize/providers/overlays/azure/dev/manuela/dashboard
