@@ -10,8 +10,8 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
     targetRevision: master
-    #path: kustomize/instances/overlays/dev/manuela/machine-sensor
-    path: kustomize/providers/overlays/azure/dev/manuela/machine-sensor
+    path: kustomize/instances/overlays/dev/manuela/machine-sensor
+    #path: kustomize/providers/overlays/azure/dev/manuela/machine-sensor
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-quickstart-machine-sensor
