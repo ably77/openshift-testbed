@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed
     targetRevision: HEAD
-    path: argocd/apps/dev/aws
+    path: argocd/apps/dev/azure
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
