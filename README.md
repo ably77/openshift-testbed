@@ -86,9 +86,17 @@ Lab instructions have been created to help walk you through the capabilities of 
 
 ### Running and automated build
 This is able to build and deploy itself using Openshift Build strategies.
+
+AWS Deployment:
 ```
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/openshift-testbed-installer.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/aws-openshift-testbed-installer.yaml
 ```
+
+Azure Deployment:
+```
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/azure-openshift-testbed-installer.yaml
+```
+
 
 What this will do:
 - Create a BuildConfig that points to a git repo (https://github.com/ably77/oc-client)
@@ -103,7 +111,11 @@ Once the install is complete, run the script below to open demo routes on your l
 ### Running the demo manually
 If you have an Openshift cluster up, `argocd` CLI installed, and are authenticated to the `oc` CLI just run the installation script below. The script itself has more commented information on the steps and commands if you prefer to run through this demo manually.
 ```
-./scripts/runme.sh
+./scripts/runme.sh <provider>
+
+Example:
+./scripts/runme.sh aws
+./scripts/runme.sh azure
 ```
 
 This script will:
