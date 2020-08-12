@@ -16,9 +16,8 @@ then
         exit 1
 fi
 
-echo now deploying argoCD
-
 # create argocd operator
+echo now deploying argoCD
 until oc apply -k https://github.com/ably77/openshift-testbed-apps/kustomize/instances/overlays/operators/namespaced-operators/argocd-operator; do sleep 2; done
 
 # wait for argo cluster rollout
@@ -70,11 +69,8 @@ echo checking grafana deployment status before deploying applications
 echo deploying frontend apps
 oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/argocd/apps/meta/meta-dev-apps-${platform}.yaml
 
-### Wait for IoT Demo
+### wait for IoT Demo
 ./scripts/waitfor-pod -t 10 consumer-app
-
-### switch to codeready namespace
-oc project codeready
 
 ### wait for codeready workspace to deploy
 ./scripts/wait-for-rollout.sh deployment codeready codeready 20
