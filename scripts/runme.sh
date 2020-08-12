@@ -3,8 +3,26 @@
 source ./vars.txt
 platform=$1
 
-# run argocd install script
-./argocd/install.sh
+### Check if argocd CLI is installed
+ARGOCLI=$(which argocd)
+echo checking if argocd CLI is installed
+if [[ $ARGOCLI == "" ]]
+then
+        echo
+        echo "argocd CLI not installed"
+        echo "see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md for installation instructions"
+        echo "re-run the script after argocd CLI is installed"
+        echo
+        exit 1
+fi
+
+echo now deploying argoCD
+
+# create argocd operator
+until oc apply -k https://github.com/ably77/openshift-testbed-apps/kustomize/instances/overlays/operators/namespaced-operators/argocd-operator; do sleep 2; done
+
+# wait for argo cluster rollout
+./scripts/wait-for-rollout.sh deployment argocd-server argocd 10
 
 # label node for jitsi video
 random_node1=$(oc get nodes | grep worker | awk 'NR==1{ print $1 }')
