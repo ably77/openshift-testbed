@@ -8,4 +8,4 @@ resources:
 - kafka-loadtest-app.yaml
 - manuela-line-dashboard-app.yaml
 - manuela-machine-sensor-app.yaml
-- bookinfo-app.yaml
+#- bookinfo-app.yaml
