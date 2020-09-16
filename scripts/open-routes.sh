@@ -31,6 +31,16 @@ echo opening podium route
 podium_route=$(oc get routes --all-namespaces | grep podium-podium.apps | awk '{ print $3 }')
 open http://${podium_route}
 
+### open Kiali route
+echo opening kiali route
+kiali_route=$(oc get routes --all-namespaces | grep kiali-istio-system.apps | awk '{ print $3 }')
+open http://${kiali_route}
+
+### open Book Info route
+echo opening book info route
+istio_gateway=$(oc -n istio-system get route istio-ingressgateway -o jsonpath='{.spec.host}')
+open http://${istio_gateway}/productpage
+
 echo
 echo
 echo links to relevant demo routes:
