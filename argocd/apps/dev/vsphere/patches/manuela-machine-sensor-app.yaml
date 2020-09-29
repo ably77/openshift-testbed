@@ -5,4 +5,4 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/ably77/openshift-testbed-apps
-    path: kustomize/providers/overlays/azure/dev/manuela/machine-sensor
+    path: kustomize/providers/overlays/vsphere/dev/manuela/machine-sensor
