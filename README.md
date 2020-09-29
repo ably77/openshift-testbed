@@ -18,32 +18,37 @@ Backend Platform Components:
 - Prometheus (metrics)
 - Grafana (observability)
 - Openshift Pipelines (CI/CD)
+- Node Feature Discovery Operator
+- Openshift Service Mesh
 
 Frontend Applications:
 - Real-time Streaming Temperature IoT Dashboard Application
 - Podium Collaboration Portal
 - Openshift CodeReady Workspaces - web based IDE
-- manuELA IoT Dashboard
+- manuELA IoT Manufacturing Dashboard
 - Airline Prediction Generator (kafka producer) tekton pipeline
 - Airline Prediction Kafka Streams app
 - Basic Spring Boot tekton pipeline
 - Taxi Go app tekton pipeline
 - Cat/Dog vote app tekton pipeline
 - Kafka load testing app
+- Istio Book Info app
 
 ## Concepts/Examples Reviewed
 
 Developer Tooling:
-- Tekton (pipelines)
+- Builds with source-to-image and docker strategies
+- CI/CD with Openshift Pipelines (Tekton)
+- CI/CD with Jenkins
 - CodeReady Workspaces (web-based IDE)
-- argoCD developer workflow (GitOps)
-- Git webhooks
+- GitOps with ArgoCD
+- Service Mesh monitoring and tracing (Kiali & Jaeger)
 
 Cloud Native App Development:
 - Streaming Architectures
-- GitOps workflow
+- GitOps
 - Cloud Native CI/CD
-- Centralized Configuration Management
+- Service Mesh
 - Introductory ML/AI
 
 Operations:
@@ -52,10 +57,11 @@ Operations:
 - Upgrading
 - Infrastructure Node Pools
 - Monitoring
-- Multi-cluster demonstration
 - Multi-cloud demonstration
 - Chaos Engineering
 - Centralized Configuration Management
+- Image Vulnerability Scanning
+- Node Feature Discovery
 
 ## Workshop Labs
 Lab instructions have been created to help walk you through the capabilities of `openshift-testbed`
@@ -116,6 +122,7 @@ If you have an Openshift cluster up, `argocd` CLI installed, and are authenticat
 Example:
 ./scripts/runme.sh aws
 ./scripts/runme.sh azure
+./scripts/runme.sh vsphere
 ```
 
 This script will:
