@@ -60,12 +60,12 @@ spec:
 kind: DeploymentConfig
 apiVersion: apps.openshift.io/v1
 metadata:
-  name: oc-client
+  name: openshift-testbed-installer
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
   namespace: default
   labels:
-    app: oc-client
+    app: openshift-testbed-installer
 spec:
   strategy:
     type: Rolling
@@ -115,7 +115,7 @@ spec:
             git clone https://github.com/ably77/openshift-testbed.git
             cd openshift-testbed
             ./scripts/runme.sh aws
-            oc delete dc/oc-client -n default
+            oc delete dc/openshift-testbed-installer -n default
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
 ---
