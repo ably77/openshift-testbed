@@ -20,8 +20,7 @@ spec:
         kind: ImageStreamTag
         namespace: openshift
         #name: 'python:latest'
-        name: 'python:3.5'
-        #name: 'python:3.6'
+        name: 'python:3.6'
       incremental: true
   postCommit: {}
   source:
