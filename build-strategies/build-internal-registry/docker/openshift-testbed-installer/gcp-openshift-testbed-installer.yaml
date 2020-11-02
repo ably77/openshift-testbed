@@ -1,0 +1,133 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: default
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - '*'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: default
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: oc-client
+  namespace: default
+  labels:
+    name: oc-client
+spec:
+  triggers:
+    - type: GitHub
+      github:
+        secret: secret101
+    - type: ImageChange
+      imageChange: {}
+    - type: ConfigChange
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/ably77/oc-client.git'
+  strategy:
+    type: Docker
+    #dockerStrategy:
+    #  from:
+    #    kind: ImageStreamTag
+    #    name: 'ruby:2.5'
+    #    namespace: openshift
+    #  env:
+    #    - name: EXAMPLE
+    #      value: sample-app
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'oc-client:latest'
+---
+kind: DeploymentConfig
+apiVersion: apps.openshift.io/v1
+metadata:
+  name: openshift-testbed-installer
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  namespace: default
+  labels:
+    app: openshift-testbed-installer
+spec:
+  strategy:
+    type: Rolling
+    rollingParams:
+      updatePeriodSeconds: 1
+      intervalSeconds: 1
+      timeoutSeconds: 600
+      maxUnavailable: 25%
+      maxSurge: 25%
+    resources: {}
+    activeDeadlineSeconds: 21600
+  triggers:
+    - type: ConfigChange
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - oc-client
+        from:
+          kind: ImageStreamTag
+          namespace: default
+          name: 'oc-client:latest'
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    app: oc-client
+    deploymentconfig: oc-client
+  template:
+    metadata:
+      labels:
+        app: oc-client
+        deploymentconfig: oc-client
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+    spec:
+      containers:
+        - name: oc-client
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          imagePullPolicy: Always
+          command:
+          - /bin/bash
+          - -x
+          - -c
+          - |           
+            git clone https://github.com/ably77/openshift-testbed.git
+            cd openshift-testbed
+            ./scripts/runme.sh gcp
+            oc delete dc/openshift-testbed-installer -n default
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+kind: ImageStream
+apiVersion: image.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  name: oc-client
+  namespace: default
+  labels:
+    app: oc-client
+spec:
+  lookupPolicy:
+    local: true
