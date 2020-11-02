@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: meta-frontend-apps-gcp
+  name: meta-frontend-apps
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io

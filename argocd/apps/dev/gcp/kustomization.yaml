@@ -5,6 +5,6 @@ kind: Kustomization
 bases:
 - ../aws/
 
-#patchesStrategicMerge:
-#- patches/manuela-line-dashboard-app.yaml
-#- patches/manuela-machine-sensor-app.yaml
+patchesStrategicMerge:
+- patches/manuela-line-dashboard-app.yaml
+- patches/manuela-machine-sensor-app.yaml
