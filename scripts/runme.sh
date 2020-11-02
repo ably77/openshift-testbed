@@ -40,7 +40,7 @@ oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/a
 
 ### check kafka operator deployment status
 echo waiting for kafka deployment to complete
-./scripts/waitfor-pod -t 10 strimzi-cluster-operator-v0.19.0
+./scripts/waitfor-pod -t 10 strimzi-cluster-operator-v0.20.0
 
 ### check grafana operator deployment status
 echo checking grafana deployment status before deploying applications
