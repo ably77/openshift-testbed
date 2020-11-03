@@ -5,6 +5,6 @@ kind: Kustomization
 resources:
 - iotdemo-app.yaml
 - kafka-loadtest-app.yaml
-#- manuela-line-dashboard-app.yaml
-#- manuela-machine-sensor-app.yaml
+- manuela-line-dashboard-app.yaml
+- manuela-machine-sensor-app.yaml
 - bookinfo-app.yaml
