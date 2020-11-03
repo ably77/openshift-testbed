@@ -15,3 +15,24 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-quickstart-machine-sensor
+  syncPolicy:
+    automated: 
+      prune: true
+      selfHeal: true
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
+  - group: route.openshift.io
+    kind: Route
+    jsonPointers:
+    - /status
+  - group: image.openshift.io
+    kind: ImageStream
+    jsonPointers:
+    - /spec/tags
+  - group: apps.openshift.io
+    kind: DeploymentConfig
+    jsonPointers:
+    - /spec/template/spec/containers/0/image
