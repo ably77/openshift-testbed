@@ -27,16 +27,16 @@ On every push to the `spring-petclinic` git repository on Gogs git server, the f
 
 
 # Deploy
+1. Navigate to the demo directory
 
-1. Get an OpenShift cluster via https://try.openshift.com
-1. Install OpenShift Pipelines Operator
-1. Download [OpenShift CLI](https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/) and [Tekton CLI](https://github.com/tektoncd/cli/releases) 
+    ```
+    $ cd tekton/tekton-cd-demo
+    ```
+
 1. Deploy the demo
 
     ```
-    $ oc new-project demo
-    $ git clone https://github.com/siamaksade/tekton-cd-demo 
-    $ demo.sh install
+    $ ./demo.sh install
     ```
 
 1. Start the deploy pipeline by making a change in the `spring-petclinic` Git repository on Gogs, or run the following:

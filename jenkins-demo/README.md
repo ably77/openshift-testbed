@@ -37,11 +37,6 @@ The application used in this pipeline is a JAX-RS application which is available
 ## Prerequisites
 * 10+ GB memory
 
-
-# Get OpenShift 4
-
-[Download and install CodeReady Containers](https://developers.redhat.com/products/codeready-containers/overview) in order to create a local OpenShift 4 cluster on your workstation. Otherwise [create an OpenShift 4 cluster](https://try.openshift.com) on the public cloud or the infrastructure of your choice.
-
 ## Automated Deploy on OpenShift
 You can se the `scripts/provision.sh` script provided to deploy the entire demo:
 
