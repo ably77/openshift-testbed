@@ -1,9 +1,9 @@
-# name of your machineset
-MACHINESET_NAME="infra-machineset"
+# name of your machineset <cluster-name>-<role>-<region><zone> 
+MACHINESET_NAME="ocs-machineset"
 
 # roles of your machine set 
 ROLE="infra"
-SECOND_ROLE="logging"
+SECOND_ROLE="ocs"
 
 # region and zone to deploy workers in
 REGION="us-west-1"
