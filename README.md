@@ -122,6 +122,16 @@ Once the install is complete, run the script below to open demo routes on your l
 ./scripts/open-routes.sh
 ```
 
+## Workshop Labs
+Lab instructions have been created to help walk you through the capabilities of `openshift-testbed`
+- [Lab - Navigating ArgoCD](https://github.com/ably77/openshift-testbed/blob/master/labs/argocd.md)
+- [Lab - Autoscaling](https://github.com/ably77/openshift-testbed/blob/master/labs/autoscaling.md)
+- [Lab - Cluster Monitoring](https://github.com/ably77/openshift-testbed/blob/master/labs/cluster-monitoring.md)
+- [Lab - Vulnerability Scanning using Container Security Operator ](https://github.com/ably77/openshift-testbed/blob/master/labs/container-security-operator.md)
+- [Lab - Monitoring Kafka with Grafana and Prometheus](https://github.com/ably77/openshift-testbed/blob/master/labs/kafka-monitoring.md)
+- [Lab - Scaling and Upgrading your Cluster ](https://github.com/ably77/openshift-testbed/blob/master/labs/scaling-and-upgrading.md)
+- [Lab - Node Feature Discovery](https://github.com/ably77/openshift-testbed/blob/master/labs/node-feature-discovery.md)
+
 ## Uninstall
 ```
 ./uninstall.sh

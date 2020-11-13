@@ -39,3 +39,4 @@ oc delete crd kafkabridges.kafka.strimzi.io kafkaconnectors.kafka.strimzi.io kaf
 oc delete crd config.operator.tekton.dev
 oc delete crd activemqartemisaddresses.broker.amq.io activemqartemises.broker.amq.io activemqartemisscaledowns.broker.amq.io
 oc delete crd applications.argoproj.io appprojects.argoproj.io argocdexports.argoproj.io argocds.argoproj.io
+oc delete crd nodefeaturediscoveries.nfd.openshift.io
