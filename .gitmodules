@@ -1,3 +1,0 @@
-[submodule "tekton-cd-demo"]
-	path = tekton/tekton-cd-demo
-	url = https://github.com/siamaksade/tekton-cd-demo.git
