@@ -131,6 +131,8 @@ Lab instructions have been created to help walk you through the capabilities of 
 - [Lab - Monitoring Kafka with Grafana and Prometheus](https://github.com/ably77/openshift-testbed/blob/master/labs/kafka-monitoring.md)
 - [Lab - Scaling and Upgrading your Cluster ](https://github.com/ably77/openshift-testbed/blob/master/labs/scaling-and-upgrading.md)
 - [Lab - Node Feature Discovery](https://github.com/ably77/openshift-testbed/blob/master/labs/node-feature-discovery.md)
+- [Lab - Tekton Pipelines Demo - Pet Clinic Web App](https://github.com/ably77/openshift-testbed/blob/master/labs/tekton-pipelines.md)
+
 
 ## Uninstall
 ```
