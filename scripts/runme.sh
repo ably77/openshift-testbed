@@ -60,7 +60,8 @@ echo checking grafana deployment status before deploying applications
 
 ### deploy backend services in argocd
 echo deploying backend app services
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-backend-apps.yaml
+#oc create -f https://raw.githubusercontent.com/${GITHUB_USERNAME}/openshift-testbed-apps/master/argo-apps/meta/meta-backend-apps.yaml
+oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/argo-apps/backend/meta
 
 ### check kafka deployment status
 echo waiting for kafka deployment to complete
@@ -72,7 +73,8 @@ echo checking grafana deployment status before deploying applications
 
 ### deploy frontend apps in argocd
 echo deploying frontend apps
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-dev-apps-${platform}.yaml
+#oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-dev-apps-${platform}.yaml
+oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/argo-apps/dev/$(platform)/meta
 
 ### wait for IoT Demo
 ./scripts/waitfor-pod -t 10 consumer-app
