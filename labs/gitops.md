@@ -5,9 +5,6 @@ GitOps is a set of practices that use git to manage infrastructure and applicati
 
 Benefits of GitOps - repeatability, predictability, auditability, and accessibility
 
-Below is an example architectural diagram of a GitOps workflow
-![](https://github.com/ably77/openshift-testbed/blob/master/resources/architecture2.png)
-
 ## What is Kustomize?
 Kustomize is a tool designed to let users customize raw, template-free YAML files for multiple purposes, leaving the original YAML untouched and usable as is
 
