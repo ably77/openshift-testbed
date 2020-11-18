@@ -18,7 +18,7 @@ fi
 
 # create argocd operator
 echo now deploying argoCD
-until oc apply -k https://github.com/ably77/openshift-testbed-apps/kustomize/instances/overlays/operators/namespaced-operators/argocd-operator; do sleep 2; done
+until oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/kustomize/instances/overlays/operators/namespaced-operators/argocd-operator; do sleep 2; done
 
 # wait for argo cluster rollout
 ./scripts/wait-for-rollout.sh deployment argocd-server argocd 10
@@ -31,12 +31,12 @@ oc label node $random_node2 app=jvb
 
 ### deploy cluster-config in argocd
 echo deploying cluster-config
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/cluster-config/cluster-config.yaml
+oc create -f https://raw.githubusercontent.com/${GITHUB_USERNAME}/openshift-testbed-apps/master/argo-apps/cluster-config/cluster-config.yaml
 
 
 ### deploy operators in argocd
 echo deploying operators
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-operators.yaml
+oc create -f https://raw.githubusercontent.com/${GITHUB_USERNAME}/openshift-testbed-apps/master/argo-apps/meta/meta-operators.yaml
 
 ### check kafka operator deployment status
 echo waiting for kafka deployment to complete
@@ -73,7 +73,7 @@ echo checking grafana deployment status before deploying applications
 
 ### deploy frontend apps in argocd
 echo deploying frontend apps
-#oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/argo-apps/meta/meta-dev-apps-${platform}.yaml
+#oc create -f https://raw.githubusercontent.com/${GITHUB_USERNAME}/openshift-testbed-apps/master/argo-apps/meta/meta-dev-apps-${platform}.yaml
 oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/argo-apps/dev/$(platform)/meta
 
 ### wait for IoT Demo

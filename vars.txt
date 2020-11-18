@@ -2,4 +2,4 @@
 
 # dev file for openshift-testbed codeready workspace
 CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/kustomize/instances/overlays/backend/codeready-workspaces-service/dev-file/openshift-testbed-dev-file.yaml"
-GITHUB_USERNAME="ably77"
+GITHUB_USERNAME="ably7"
