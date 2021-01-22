@@ -69,6 +69,14 @@ echo waiting for kafka deployment to complete
 echo checking grafana deployment status before deploying applications
 ./scripts/waitfor-pod -t 10 grafana-deployment
 
+### check istio deployment status
+echo checking istio deployment status before deploying applications
+./scripts/wait-for-rollout.sh deployment istiod-basic istio-system 10
+
+### check kiali deployment status
+echo checking kiali deployment status before deploying applications
+./scripts/wait-for-rollout.sh deployment kiali istio-system 10
+
 ### deploy frontend apps in argocd
 echo deploying frontend apps
 oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/argo-apps/dev/${platform}/meta
