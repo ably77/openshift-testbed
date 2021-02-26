@@ -6,7 +6,7 @@ ROLE="infra"
 SECOND_ROLE="logging"
 
 # region and zone to deploy workers in
-REGION="us-west-1"
+REGION="us-east-1"
 ZONE="b"
 
 # instance type to deploy
