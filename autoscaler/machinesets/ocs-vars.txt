@@ -1,16 +1,16 @@
 # name of your machineset <cluster-name>-<role>-<region><zone> 
-MACHINESET_NAME="ocs-machineset"
+MACHINESET_NAME="ocs-machineset-1d"
 
 # roles of your machine set 
 ROLE="infra"
 SECOND_ROLE="ocs"
 
 # region and zone to deploy workers in
-REGION="us-west-1"
-ZONE="b"
+REGION="us-east-1"
+ZONE="d"
 
 # instance type to deploy
 INSTANCE_TYPE="m4.2xlarge"
 
 # desired number of workers
-DESIRED_REPLICAS="2"
+DESIRED_REPLICAS="1"

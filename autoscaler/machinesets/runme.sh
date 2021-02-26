@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# Get source of variable file
+read -p 'Name of variables file (i.e. vars.txt): ' varfile
+
 # source static variables
-source vars.txt
+source $varfile
 
 # dynamic variables
 worker_node=$(oc get machinesets -n openshift-machine-api | awk 'NR==2{ print $1 }')
 CLUSTER_NAME=$(oc get -o jsonpath='{.status.infrastructureName}{"\n"}' infrastructure cluster)
-AMI_ID=$(oc get machineset -n openshift-machine-api ${worker_node} -o yaml | grep ami- | awk '{ print $2 }')
+AMI_ID=$(oc get machineset -n openshift-machine-api ${worker_node} -o yaml | grep ami- | awk 'NR==2{ print $2 }')
 
 # create generated directory if it doesnt exist
 mkdir -p ./generated/${MACHINESET_NAME}
