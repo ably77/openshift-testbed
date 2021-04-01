@@ -124,6 +124,7 @@ Once the install is complete, run the script below to open demo routes on your l
 
 ## Workshop Labs
 Lab instructions have been created to help walk you through the capabilities of `openshift-testbed`
+- [Lab - GitOps Setup](https://github.com/ably77/openshift-testbed/blob/master/labs/gitops.md)
 - [Lab - Navigating ArgoCD](https://github.com/ably77/openshift-testbed/blob/master/labs/argocd.md)
 - [Lab - Autoscaling](https://github.com/ably77/openshift-testbed/blob/master/labs/autoscaling.md)
 - [Lab - Cluster Monitoring](https://github.com/ably77/openshift-testbed/blob/master/labs/cluster-monitoring.md)
@@ -136,5 +137,5 @@ Lab instructions have been created to help walk you through the capabilities of 
 
 ## Uninstall
 ```
-./uninstall.sh
+./scripts/uninstall.sh
 ```

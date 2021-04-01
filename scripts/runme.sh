@@ -57,10 +57,6 @@ echo checking grafana deployment status before deploying applications
 echo checking grafana deployment status before deploying applications
 ./scripts/waitfor-pod -t 10 podium-operator
 
-### deploy backend services in argocd
-echo deploying backend app services
-oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/argo-apps/backend/meta
-
 ### check kafka deployment status
 echo waiting for kafka deployment to complete
 ./scripts/waitfor-pod -t 20 my-cluster-kafka-2
