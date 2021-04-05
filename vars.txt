@@ -1,7 +1,7 @@
 # openshift-testbed-apps repo variables
 
 # dev file for openshift-testbed codeready workspace
-CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/kustomize/instances/overlays/backend/codeready-workspaces-service/dev-file/openshift-testbed-dev-file.yaml"
+CODEREADY_DEVFILE_URL="https://raw.githubusercontent.com/ably77/openshift-testbed-apps/master/kustomize/instances/overlays/operators/namespaced-operators/codeready-workspaces-operator/dev-file/openshift-testbed-dev-file.yaml"
 
 # change your github username if you have forked this repo
 # default is ably77
