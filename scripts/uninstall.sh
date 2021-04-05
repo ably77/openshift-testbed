@@ -34,3 +34,7 @@ oc delete crd config.operator.tekton.dev
 oc delete crd activemqartemisaddresses.broker.amq.io activemqartemises.broker.amq.io activemqartemisscaledowns.broker.amq.io
 oc delete crd applications.argoproj.io appprojects.argoproj.io argocdexports.argoproj.io argocds.argoproj.io
 oc delete crd nodefeaturediscoveries.nfd.openshift.io
+oc delete crd reportdatasources.metering.openshift.io reportqueries.metering.openshift.io reports.metering.openshift.io
+oc delete crd sparkapplications.radanalytics.io sparkclusters.radanalytics.io sparkhistoryservers.radanalytics.io
+oc delete crd seldondeployments.machinelearning.seldon.io 
+oc delete crd kfdefs.kfdef.apps.kubeflow.org
