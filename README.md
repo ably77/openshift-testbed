@@ -22,6 +22,10 @@ Backend Platform Components:
 - Container Security Operator (container scanning)
 - Node Feature Discovery Operator (node label discovery)
 - Openshift Service Mesh Operator (istio)
+- Metering Operator (chargeback reports)
+- Namespace Config Operator (cluster-config)
+- Open Data Hub (Data Science)
+- Web Terminal Operator (Embedded Terminal)
 
 
 Frontend Applications:
@@ -50,7 +54,8 @@ Cloud Native App Development:
 - GitOps
 - Cloud Native CI/CD
 - Service Mesh
-- Introductory ML/AI
+- Data Science
+- ML/AI
 
 Operations:
 - Scaling and Upgrading your cluster

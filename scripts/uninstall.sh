@@ -1,18 +1,5 @@
 #!/bin/bash
 
-### Check if argocd CLI is installed
-ARGOCLI=$(which argocd)
-echo checking if argocd CLI is installed
-if [[ $ARGOCLI == "" ]]
-then
-        echo
-        echo "argocd CLI not installed"
-        echo "see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md for installation instructions"
-        echo "re-run the script after argocd CLI is installed"
-        echo
-        exit 1
-fi
-
 # delete argo apps
 oc delete applications -n argocd --all
 
