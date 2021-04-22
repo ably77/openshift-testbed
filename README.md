@@ -1,5 +1,5 @@
 # Openshift Test Bed
-The purpose of this repo is to show several examples of Openshift and upstream Kubernetes concepts as reference examples that can be used and expanded on.
+The purpose of this repo is to show several examples of Openshift and upstream Kubernetes concepts as reference examples that can be used and expanded on. You can run this demo anywhere OpenShift runs - this demo has been tested on AWS, Azure, GCP, RHV, and VMware.
 
 ### Business Value Goals:
 The focus of openshift-testbed is to show value in the following key areas:
@@ -73,8 +73,8 @@ Operations:
      - AWS - 3x m5.xlarge workers (4CPU x 16GB RAM)
      - Azure - 3x Standard_D3s_v3 workers (4CPU x 16GB RAM)
      - GCP - 3x n2-standard-4 (4CPU x 16GB RAM)
+     - vSphere - 3x (4CPU x 16GB RAM) VMs
 - Admin Privileges (i.e. cluster-admin RBAC privileges or logged in as system:admin user)
-- `argo` client installed (see https://github.com/argoproj/argo-cd/blob/master/docs/cli_installation.md)
 - `oc` client installed (see https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/)
 - Storage configured on cluster (this demo has been tested on AWS, Azure, GCP, and vSphere storage)
 
