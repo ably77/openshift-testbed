@@ -1,17 +1,6 @@
 #!/bin/bash
 
 source ./vars.txt
-platform=$1
-
-if [ $# -eq 0 ]; then
-    echo "No arguments provided. Please provide platform:"
-    echo "Examples:"
-    echo "./scripts/runme.sh aws"
-    echo "./scripts/runme.sh azure"
-    echo "./scripts/runme.sh gcp"
-    echo "./scripts/runme.sh vsphere"
-    exit 1
-fi
 
 # create argocd operator
 echo now deploying argoCD
@@ -40,7 +29,9 @@ echo waiting for kafka deployment to complete
 
 ### deploy frontend apps in argocd
 echo deploying frontend apps
-oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/argo-apps/dev/${platform}/meta
+# taking manuela out for now to reduce complexity
+#oc apply -k https://github.com/${GITHUB_USERNAME}/openshift-testbed-apps/argo-apps/dev/${platform}/meta
+oc apply -k https://github.com/ably77/openshift-testbed-apps/argo-apps/dev/meta
 
 ### wait for codeready workspace to deploy
 ./scripts/wait-for-rollout.sh deployment codeready codeready 20

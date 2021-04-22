@@ -32,7 +32,6 @@ Frontend Applications:
 - Real-time Streaming Temperature IoT Dashboard Application
 - Podium Collaboration Portal
 - Openshift CodeReady Workspaces - web based IDE
-- manuELA IoT Manufacturing Dashboard
 - Airline Prediction Generator (kafka producer) tekton pipeline
 - Airline Prediction Kafka Streams app
 - Basic Spring Boot tekton pipeline
@@ -83,20 +82,8 @@ Operations:
 
 ### Running and automated build
 This is able to build and deploy itself using Openshift Build strategies.
-
-AWS Deployment:
 ```
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/aws-openshift-testbed-installer.yaml
-```
-
-Azure Deployment:
-```
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/azure-openshift-testbed-installer.yaml
-```
-
-GCP Deployment:
-```
-oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/gcp-openshift-testbed-installer.yaml
+oc create -f https://raw.githubusercontent.com/ably77/openshift-testbed/master/build-strategies/build-internal-registry/docker/openshift-testbed-installer/openshift-testbed-installer.yaml
 ```
 
 What this will do:
@@ -112,13 +99,7 @@ oc logs openshift-testbed-installer-1-p4t72 -n default -f
 ### Running the demo manually
 If you have an Openshift cluster up, `argocd` CLI installed, and are authenticated to the `oc` CLI just run the installation script below and follow the output in your console. The script itself has more commented information on the steps and commands if you prefer to run through this demo step-by-step
 ```
-./scripts/runme.sh <provider>
-
-Example:
-./scripts/runme.sh aws
-./scripts/runme.sh azure
-./scripts/runme.sh gcp
-./scripts/runme.sh vsphere
+./scripts/runme.sh
 ```
 
 ### Opening routes
