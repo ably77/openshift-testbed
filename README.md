@@ -1,6 +1,9 @@
 # Openshift Test Bed
 The purpose of this repo is to show several examples of Openshift and upstream Kubernetes concepts as reference examples that can be used and expanded on. You can run this demo anywhere OpenShift runs - this demo has been tested on AWS, Azure, GCP, RHV, and VMware.
 
+## Youtube Video Demonstration
+[![Youtube Video Demonstration](https://github.com/ably77/strimzi-openshift-demo/blob/master/resources/youtube1.png)](https://youtu.be/lIu46FbpiHI)
+
 ### Business Value Goals:
 The focus of openshift-testbed is to show value in the following key areas:
 - Standardization - Applications leverage GitOps patterns to standardize application and configuration management
