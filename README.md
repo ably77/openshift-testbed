@@ -2,9 +2,7 @@
 The purpose of this repo is to show several examples of Openshift and upstream Kubernetes concepts as reference examples that can be used and expanded on. You can run this demo anywhere OpenShift runs - this demo has been tested on AWS, Azure, GCP, RHV, and VMware.
 
 ## Youtube Video Demonstration
-[![Youtube Video Demonstration](https://https://github.com/ably77/openshift-testbed/blob/master/resources/iot1.png)](https://youtu.be/lIu46FbpiHI)
-
-https://github.com/ably77/openshift-testbed/blob/master/resources/
+[![Youtube Video Demonstration](https://github.com/ably77/openshift-testbed/blob/8787fb39cb50b0fff17b54da8f9c02294c2faa1c/resources/youtube1.png)](https://youtu.be/lIu46FbpiHI)
 
 ### Business Value Goals:
 The focus of openshift-testbed is to show value in the following key areas:
