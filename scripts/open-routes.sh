@@ -21,11 +21,6 @@ echo deploying codeready workspace
 CHE_HOST=$(oc get routes --all-namespaces | grep codeready-codeready.apps | awk '{ print $3 }')
 open http://${CHE_HOST}/f?url=${CODEREADY_DEVFILE_URL}
 
-### open manuELA IoT dashboard route
-echo opening manuELA IoT dashboard route
-manuela_route=$(oc get routes --all-namespaces | grep line-dashboard-manuela- | awk '{ print $3 }')
-open http://${manuela_route}
-
 ### open Podium route
 echo opening podium route
 podium_route=$(oc get routes --all-namespaces | grep podium-podium.apps | awk '{ print $3 }')
@@ -53,9 +48,6 @@ echo https://${grafana_route}
 echo
 echo argocd console:
 echo http://${argocd_route}
-echo
-echo manuELA IoT dashboard:
-echo http://${manuela_route}
 echo
 echo podium collaboration dashboard
 echo http://${podium_route}
